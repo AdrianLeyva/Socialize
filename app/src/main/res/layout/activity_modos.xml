@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="teamprogra.app.socialize.socialize.ModosActivity"
+    android:background="@color/colorPrimaryDark">
+
+    <TextView
+        android:id="@+id/textView_modoAnfitrion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/colorWhite"
+        android:text="@string/textView_modoAnfitrion"
+        android:textSize="30sp"
+        android:fontFamily="serif-monospace"/>
+
+    <ImageView
+        android:id="@+id/imageView_modoAnfitrion"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/modo_anfitrion"
+        android:background="@color/colorRed"
+        android:onClick="goAnfitrion"
+        />
+
+    <TextView
+        android:id="@+id/textView_modoInvitado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/colorWhite"
+        android:text="@string/textView_modoInvitado"
+        android:textSize="30sp"
+        android:fontFamily="serif-monospace"/>
+
+    <ImageView
+        android:id="@+id/imageView_modoInvitado"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/modo_invitado"
+        android:background="@color/colorPrimaryDark"/>
+
+</LinearLayout>
