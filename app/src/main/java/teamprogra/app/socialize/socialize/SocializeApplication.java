@@ -13,7 +13,8 @@ public class SocializeApplication extends Application{
     private SharedPreferences preferences;
 
     private static final String APP_KEY_IS_LOGIN_START = "APP_KEY_IS_LOGIN_START";
-
+    private static final String APP_USER_NAME = "APP_USER_NAME";
+    private static final String APP_USER_EMAIL = "APP_USER_EMAIL";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -31,6 +32,23 @@ public class SocializeApplication extends Application{
     public boolean isLoginStart(){
         return getBooleanRegisterValuePreferences(SocializeApplication.APP_KEY_IS_LOGIN_START);
     }
+
+    public void registerUserName(String userName){
+        saveValuePreferences(SocializeApplication.APP_USER_NAME, userName);
+    }
+
+    public void registerUserEmail(String userEmail){
+        saveValuePreferences(SocializeApplication.APP_USER_EMAIL, userEmail);
+    }
+
+    public String getRegisterUserName(){
+        return preferences.getString(SocializeApplication.APP_USER_NAME,null);
+    }
+
+    public String getRegisterUserEmail(){
+        return preferences.getString(SocializeApplication.APP_USER_EMAIL,null);
+    }
+
 
     public void saveValuePreferences(String key,String value){
         SharedPreferences.Editor editor = preferences.edit();

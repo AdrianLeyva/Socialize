@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "663481311157",
+    "project_id": "socialize-7d806"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663481311157:android:81b65aa426a5e784",
+        "android_client_info": {
+          "package_name": "teamprogra.app.socialize.socialize"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663481311157-df4f2b2tkgnbuhpq5lvvoq3fbpi6ol2u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "teamprogra.app.socialize.socialize",
+            "certificate_hash": "74381BE73129C4D71F3AB824C080E84AE6578EAA"
+          }
+        },
+        {
+          "client_id": "663481311157-fncbc96r9dcmm8mae5mmppqi9fh2c99i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOqLFXl9Utr2JH2uueR8gEFPIO3nvB9R8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -20,6 +20,39 @@ public class ModosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modos);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SocializeApplication app = (SocializeApplication) getApplicationContext();
+        String userName = app.getRegisterUserName();
+        Util.showToastShort(this,userName);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
     public void goAnfitrion(View view){
         Util.sendAndFinish(ModosActivity.this,MainActivity.class);
     }
