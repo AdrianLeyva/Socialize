@@ -7,10 +7,10 @@
     <string name="editText_ingresarUsuario">Ingrese su usuario</string>
     <string name="editText_ingresarContraseña">Ingrese su contraseña</string>
     <string name="button_login">Validar</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_ModoAnfitrion">Modo Anfitrión</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_log_out">Cerrar sesión</string>
 </resources>

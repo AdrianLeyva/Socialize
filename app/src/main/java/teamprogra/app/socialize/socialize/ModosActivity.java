@@ -21,6 +21,6 @@ public class ModosActivity extends AppCompatActivity {
     }
 
     public void goAnfitrion(View view){
-        Util.sendAndFinish(this,MainActivity.class);
+        Util.sendAndFinish(ModosActivity.this,MainActivity.class);
     }
 }
