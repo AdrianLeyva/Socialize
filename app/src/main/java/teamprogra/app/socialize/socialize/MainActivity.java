@@ -1,10 +1,8 @@
 package teamprogra.app.socialize.socialize;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import teamprogra.app.domain.User;
+import teamprogra.app.persistence.SocializeSQLiteOpenHelper;
 import teamprogra.app.util.Util;
 
 public class MainActivity extends AppCompatActivity
@@ -42,8 +41,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        getUserInformation();
     }
 
     @Override
@@ -103,11 +100,13 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public User getUserInformation(){
-        app = (SocializeApplication) getApplicationContext();
-        String jsonUserSaved = app.getStringRegisterValuePreferences(SocializeApplication.getAppKeyUserObject());
-        User userSaved = User.createUserFromJson(jsonUserSaved);
-        Util.showToastShort(this,userSaved.getName());
-        return userSaved;
+    public void getUserData(){
+        SocializeSQLiteOpenHelper admin = new SocializeSQLiteOpenHelper(this,
+                                                SocializeSQLiteOpenHelper.getDataBaseSocialize(),null,
+                                                SocializeSQLiteOpenHelper.getDataBaseVersion());
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        Cursor pointer = bd.rawQuery("select * from User",null);
+        pointer.moveToNext();
+        user = new User(pointer.getString(0),pointer.getString(1));
     }
 }

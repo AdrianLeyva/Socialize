@@ -1,6 +1,7 @@
 package teamprogra.app.socialize.socialize;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.net.Uri;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import teamprogra.app.domain.User;
+import teamprogra.app.persistence.SocializeSQLiteOpenHelper;
 import teamprogra.app.util.Util;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
@@ -35,14 +37,42 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         configureGoogleApi();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mGoogleApiClient.disconnect();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
     public void doSignInGoogle(View view){
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
 
-        app = (SocializeApplication) getApplicationContext();
-        app.registerLogIn();
-        Util.showToastShort(this,"Registro exitoso");
-        Util.sendAndFinish(this,ModosActivity.class);
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -56,8 +86,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 GoogleSignInAccount acct = result.getSignInAccount();
                 // Get account information
                 user = new User(acct.getDisplayName(),acct.getEmail());
-                String jsonUser = user.serializeUser();
-                app.saveValuePreferences(SocializeApplication.getAppKeyUserObject(),jsonUser);
+                app = (SocializeApplication) getApplicationContext();
+                app.registerLogIn();
+                Util.showToastShort(this,user.getName());
+                Util.sendAndFinish(this,ModosActivity.class);
             }
             else {
                 Util.showToastShort(this,"Error al obtener los datos");
@@ -82,5 +114,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .enableAutoManage(this,this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+    }
+
+    public void saveUserData(User user){
+        SocializeSQLiteOpenHelper admin = new SocializeSQLiteOpenHelper(this,
+                                            SocializeSQLiteOpenHelper.getDataBaseSocialize(),null,
+                                            SocializeSQLiteOpenHelper.getDataBaseVersion());
+        SQLiteDatabase bd = admin.getWritableDatabase();
+
+        ContentValues registry = new ContentValues();
+        registry.put("name",user.getName());
+        registry.put("email",user.getEmail());
+
+        bd.insert("User",null,registry);
+        bd.close();
     }
 }

@@ -53,10 +53,6 @@ public class SocializeApplication extends Application{
         return preferences.getBoolean(key,false);
     }
 
-    public static String getAppKeyUserObject(){
-        return SocializeApplication.APP_KEY_USER_OBJECT;
-    }
-
     public SharedPreferences getPreferences() {
         return preferences;
     }
