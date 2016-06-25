@@ -1,13 +1,11 @@
 package teamprogra.app.socialize.socialize;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -15,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import teamprogra.app.domain.User;
 import teamprogra.app.util.Util;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
@@ -23,6 +22,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleSignInOptions gso;
     private GoogleApiClient mGoogleApiClient;
     private int RC_SIGN_IN = 1000;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,18 +32,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
-
-        // Configure sign-in to request the user's ID, email address, and basic profile. ID and
-        // basic profile are included in DEFAULT_SIGN_IN.
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        // Build a GoogleApiClient with access to GoogleSignIn.API and the options above.
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this,this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+        configureGoogleApi();
     }
 
     public void doSignInGoogle(View view){
@@ -52,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         app = (SocializeApplication) getApplicationContext();
         app.registerLogIn();
+        Util.showToastShort(this,"Registro exitoso");
         Util.sendAndFinish(this,ModosActivity.class);
     }
 
@@ -65,13 +55,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (result.isSuccess()) {
                 GoogleSignInAccount acct = result.getSignInAccount();
                 // Get account information
-                String userName = acct.getDisplayName();
-                String userEmail = acct.getEmail();
-                Uri userPhoto = acct.getPhotoUrl();
-
-                SocializeApplication app = (SocializeApplication) getApplicationContext();
-                app.registerUserName(userName);
-                app.registerUserEmail(userEmail);
+                user = new User(acct.getDisplayName(),acct.getEmail());
+                String jsonUser = user.serializeUser();
+                app.saveValuePreferences(SocializeApplication.getAppKeyUserObject(),jsonUser);
             }
             else {
                 Util.showToastShort(this,"Error al obtener los datos");
@@ -82,5 +68,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+    public void configureGoogleApi(){
+        // Configure sign-in to request the user's ID, email address, and basic profile. ID and
+        // basic profile are included in DEFAULT_SIGN_IN.
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleApiClient with access to GoogleSignIn.API and the options above.
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this,this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
     }
 }

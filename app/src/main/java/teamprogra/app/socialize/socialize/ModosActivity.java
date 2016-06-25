@@ -38,9 +38,6 @@ public class ModosActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SocializeApplication app = (SocializeApplication) getApplicationContext();
-        String userName = app.getRegisterUserName();
-        Util.showToastShort(this,userName);
     }
 
     @Override

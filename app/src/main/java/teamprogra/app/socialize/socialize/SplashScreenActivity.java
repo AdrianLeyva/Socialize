@@ -1,6 +1,5 @@
 package teamprogra.app.socialize.socialize;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +18,43 @@ public class SplashScreenActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
+        throwSplash();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        throwSplash();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+       throwSplash();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    public void throwSplash(){
         app = (SocializeApplication) getApplicationContext();
 
         new Handler().postDelayed(new Runnable() {
@@ -32,6 +68,5 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }
             }
         },3000);
-
     }
 }

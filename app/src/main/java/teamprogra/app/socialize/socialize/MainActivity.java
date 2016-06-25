@@ -16,11 +16,14 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
+import teamprogra.app.domain.User;
 import teamprogra.app.util.Util;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private SocializeApplication app;
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        getUserInformation();
     }
 
     @Override
@@ -96,5 +101,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public User getUserInformation(){
+        app = (SocializeApplication) getApplicationContext();
+        String jsonUserSaved = app.getStringRegisterValuePreferences(SocializeApplication.getAppKeyUserObject());
+        User userSaved = User.createUserFromJson(jsonUserSaved);
+        Util.showToastShort(this,userSaved.getName());
+        return userSaved;
     }
 }
