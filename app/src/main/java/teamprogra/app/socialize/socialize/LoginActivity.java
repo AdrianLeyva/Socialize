@@ -13,7 +13,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-
 import teamprogra.app.domain.User;
 import teamprogra.app.persistence.SocializeSQLiteOpenHelper;
 import teamprogra.app.util.Util;
@@ -88,6 +87,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 user = new User(acct.getDisplayName(),acct.getEmail());
                 app = (SocializeApplication) getApplicationContext();
                 app.registerLogIn();
+                app.registerSignInGoogle();
                 Util.showToastShort(this,user.getName());
                 Util.sendAndFinish(this,ModosActivity.class);
             }
@@ -101,6 +101,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
+
+
 
     public void configureGoogleApi(){
         // Configure sign-in to request the user's ID, email address, and basic profile. ID and

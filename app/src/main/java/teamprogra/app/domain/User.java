@@ -1,5 +1,7 @@
 package teamprogra.app.domain;
 
+import android.net.Uri;
+
 import com.google.gson.Gson;
 
 /**
@@ -9,19 +11,18 @@ public class User {
 
     private String name;
     private String email;
+    private Uri photo;
     private int age;
     private String occupation;
+    private String ubication;
+    private String gender;
+    private long phone;
+    private int organizedEvents;
+    private int score;
 
     public User(String name, String email) {
         this.name = name;
         this.email = email;
-    }
-
-    public User(String name, String email, int age, String occupation) {
-        this.name = name;
-        this.email = email;
-        this.age = age;
-        this.occupation = occupation;
     }
 
     /**
@@ -58,6 +59,14 @@ public class User {
         this.email = email;
     }
 
+    public Uri getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Uri photo) {
+        this.photo = photo;
+    }
+
     public int getAge() {
         return age;
     }
@@ -72,5 +81,45 @@ public class User {
 
     public void setOccupation(String occupation) {
         this.occupation = occupation;
+    }
+
+    public String getUbication() {
+        return ubication;
+    }
+
+    public void setUbication(String ubication) {
+        this.ubication = ubication;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(long phone) {
+        this.phone = phone;
+    }
+
+    public int getOrganizedEvents() {
+        return organizedEvents;
+    }
+
+    public void setOrganizedEvents(int organizedEvents) {
+        this.organizedEvents = organizedEvents;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

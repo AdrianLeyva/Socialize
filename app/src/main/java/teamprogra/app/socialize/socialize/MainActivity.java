@@ -13,13 +13,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
-
+import com.google.android.gms.common.api.GoogleApiClient;
 import teamprogra.app.domain.User;
 import teamprogra.app.persistence.SocializeSQLiteOpenHelper;
 import teamprogra.app.util.Util;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks {
 
     private SocializeApplication app;
     private User user;
@@ -71,6 +71,12 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_logOut) {
             SocializeApplication app = (SocializeApplication) getApplicationContext();
             app.registerLogOut();
+            if(app.isSignInGoogle()){
+                app.registerLogOutGoogle();
+            }
+            else {
+                app.registerLogOutFacebook();
+            }
             Util.sendAndFinish(MainActivity.this,LoginActivity.class);
             return true;
         }
@@ -108,5 +114,16 @@ public class MainActivity extends AppCompatActivity
         Cursor pointer = bd.rawQuery("select * from User",null);
         pointer.moveToNext();
         user = new User(pointer.getString(0),pointer.getString(1));
+    }
+
+
+    @Override
+    public void onConnected(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
     }
 }

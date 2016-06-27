@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context="teamprogra.app.socialize.socialize.RegisterActivity">
+
+    <TextView
+        android:id="@+id/textView_titleActivityRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="@string/title_activity_RegisterActivity"
+        android:textSize="30sp"
+        android:textColor="@color/colorWhite"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView_ubicacionRA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_titleActivityRegister"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:text="@string/textView_ubicacion"
+        android:textSize="30sp"
+        android:textColor="@color/colorWhite"/>
+
+    <EditText
+        android:id="@+id/editText_ubicacionRA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:hint="ubicación actual"
+        android:textColor="@color/colorBlack"
+        android:layout_alignBottom="@+id/textView_ubicacionRA"
+        android:layout_toRightOf="@+id/textView_ubicacionRA"
+        android:layout_toEndOf="@+id/textView_ubicacionRA"
+         />
+
+    <TextView
+        android:id="@+id/textView_edadRA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_ubicacionRA"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:text="@string/textView_edad"
+        android:textSize="30sp"
+        android:textColor="@color/colorWhite"/>
+
+    <EditText
+        android:id="@+id/editText_edadRA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="75dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:hint="Introduzca su edad"
+        android:inputType="number"
+        android:textColor="@color/colorBlack"
+        android:layout_alignBottom="@+id/textView_edadRA"
+        android:layout_toRightOf="@+id/textView_edadRA"
+        android:layout_toEndOf="@+id/textView_edadRA"
+        />
+
+    <TextView
+        android:id="@+id/textView_generoRA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_edadRA"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:text="@string/textView_genero"
+        android:textSize="30sp"
+        android:textColor="@color/colorWhite"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroup_generoRA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView_generoRA"
+        android:layout_toRightOf="@+id/textView_generoRA"
+        android:layout_toEndOf="@+id/textView_generoRA"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/colorWhite"
+        >
+
+        <RadioButton
+            android:id="@+id/radioButton_masculinoRA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Masculino"/>
+
+        <RadioButton
+            android:id="@+id/radioButton_femeninoRA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Femenino"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView_ocupacionRA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_generoRA"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:text="@string/textView_ocupacion"
+        android:textSize="30sp"
+        android:textColor="@color/colorWhite"/>
+
+    <Spinner
+        android:id="@+id/spinner_ocupacionRA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView_ocupacionRA"
+        android:layout_alignLeft="@+id/radioGroup_generoRA"
+        android:layout_alignStart="@+id/radioGroup_generoRA"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:background="@color/colorWhite"
+        >
+
+    </Spinner>
+
+    <TextView
+        android:id="@+id/textView_telefonoRA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_ocupacionRA"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:text="@string/textView_telefono"
+        android:textSize="30sp"
+        android:textColor="@color/colorWhite"/>
+
+    <EditText
+        android:id="@+id/editText_telefonoRA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView_telefonoRA"
+        android:layout_toRightOf="@+id/textView_telefonoRA"
+        android:layout_toEndOf="@+id/textView_telefonoRA"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="25dp"
+        android:inputType="phone"
+        android:ems="10"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:hint="número telefónico"
+        android:textColor="@color/colorBlack"
+         />
+
+    <Button
+        android:id="@+id/button_continuarRA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:text="@string/button_continuar"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:background="@color/colorAccent"
+        />
+
+</RelativeLayout>

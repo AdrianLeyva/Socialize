@@ -13,7 +13,9 @@ public class SocializeApplication extends Application{
     private SharedPreferences preferences;
 
     private static final String APP_KEY_IS_LOGIN_START = "APP_KEY_IS_LOGIN_START";
-    private static final String APP_KEY_USER_OBJECT = "APP_KEY_USER_OBJECT";
+    private static final String APP_KEY_IS_SIGN_IN_WITH_GOOGLE = "APP_KEY_IS_LOGIN_WITH_GOOGLE";
+    private static final String APP_KEY_IS_SIGN_IN_WITH_FACEBOOK = "APP_KEY_IS_LOGIN_WITH_FACEBOOK";
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -30,6 +32,30 @@ public class SocializeApplication extends Application{
 
     public boolean isLoginStart(){
         return getBooleanRegisterValuePreferences(SocializeApplication.APP_KEY_IS_LOGIN_START);
+    }
+
+    public void registerSignInGoogle(){
+        saveValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_GOOGLE,true);
+    }
+
+    public void registerLogOutGoogle(){
+        saveValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_GOOGLE,false);
+    }
+
+    public void registerSignInFacebook(){
+        saveValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_FACEBOOK, true);
+    }
+
+    public void registerLogOutFacebook(){
+        saveValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_FACEBOOK,false);
+    }
+
+    public boolean isSignInGoogle(){
+        return getBooleanRegisterValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_GOOGLE);
+    }
+
+    public boolean isSignInFacebook(String key){
+        return getBooleanRegisterValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_FACEBOOK);
     }
 
 

@@ -4,10 +4,17 @@
     <string name="textView_modoInvitado">Modo invitado</string>
     <string name="textView_titleLoginActivity">¡Comienza registrándote aquí!</string>
     <string name="textView_infoRegistrarse">¿No tienes un usuario? Regístrate aquí</string>
+    <string name="textView_ubicacion">Ubicación:</string>
+    <string name="textView_edad">Edad:</string>
+    <string name="textView_genero">Género:</string>
+    <string name="textView_ocupacion">Ocupación:</string>
+    <string name="textView_telefono">Teléfono:</string>
     <string name="editText_ingresarUsuario">Ingrese su usuario</string>
     <string name="editText_ingresarContraseña">Ingrese su contraseña</string>
     <string name="button_login">Validar</string>
+    <string name="button_continuar">Continuar</string>
     <string name="title_activity_ModoAnfitrion">Modo Anfitrión</string>
+    <string name="title_activity_RegisterActivity">Datos de registro</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
