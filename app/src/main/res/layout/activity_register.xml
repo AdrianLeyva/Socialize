@@ -181,6 +181,7 @@
         android:textSize="20sp"
         android:gravity="center"
         android:background="@color/colorAccent"
+        android:onClick="finalizeRegister"
         />
 
 </RelativeLayout>

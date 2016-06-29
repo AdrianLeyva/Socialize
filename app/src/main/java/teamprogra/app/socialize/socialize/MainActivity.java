@@ -1,7 +1,6 @@
 package teamprogra.app.socialize.socialize;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,18 +10,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import com.squareup.picasso.Picasso;
+import com.sromku.simple.fb.SimpleFacebook;
+import com.sromku.simple.fb.listeners.OnLogoutListener;
+
 import teamprogra.app.domain.User;
-import teamprogra.app.persistence.SocializeSQLiteOpenHelper;
 import teamprogra.app.util.Util;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks,
+            GoogleApiClient.OnConnectionFailedListener{
 
     private SocializeApplication app;
     private User user;
+    private SimpleFacebook mSimpleFacebook;
+    private GoogleApiClient mGoogleApiClient;
+    private TextView textViewName;
+    private TextView textViewEmail;
+    private ImageView imageViewProfile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +56,26 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        app = (SocializeApplication) getApplicationContext();
+        user = new User();
+        getUserData();
+
+        View headerView = navigationView.getHeaderView(0);
+        imageViewProfile = (ImageView) headerView.findViewById(R.id.imageView);
+        textViewName = (TextView)headerView.findViewById(R.id.textView_userNameMA);
+        textViewEmail = (TextView)headerView.findViewById(R.id.textView_emailUserMA);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSimpleFacebook = SimpleFacebook.getInstance(this);
+        textViewName.setText(user.getName());
+        textViewEmail.setText(user.getEmail());
+        Picasso.with(this).load(user.getPhoto()).into(imageViewProfile);
+
     }
 
     @Override
@@ -69,15 +104,18 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logOut) {
-            SocializeApplication app = (SocializeApplication) getApplicationContext();
-            app.registerLogOut();
             if(app.isSignInGoogle()){
+                app.registerLogOut();
                 app.registerLogOutGoogle();
+
+                Util.showToastShort(this,"google");
+                Util.sendAndFinish(MainActivity.this,LoginActivity.class);
             }
-            else {
-                app.registerLogOutFacebook();
+            else{
+                mSimpleFacebook.logout(onLogoutListener);
             }
-            Util.sendAndFinish(MainActivity.this,LoginActivity.class);
+
+
             return true;
         }
 
@@ -107,15 +145,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void getUserData(){
-        SocializeSQLiteOpenHelper admin = new SocializeSQLiteOpenHelper(this,
-                                                SocializeSQLiteOpenHelper.getDataBaseSocialize(),null,
-                                                SocializeSQLiteOpenHelper.getDataBaseVersion());
-        SQLiteDatabase bd = admin.getWritableDatabase();
-        Cursor pointer = bd.rawQuery("select * from User",null);
-        pointer.moveToNext();
-        user = new User(pointer.getString(0),pointer.getString(1));
-    }
+        user.setName(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_NAME));
+        user.setEmail(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_EMAIL));
+        user.setBirthday(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_BIRTHDAY));
+        user.setId(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_ID));
+        user.setGender(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_GENDER));
+        user.setPhoto(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_PICTURE));
 
+    }
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -124,6 +161,23 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onConnectionSuspended(int i) {
+
+    }
+
+    // logout listener
+    OnLogoutListener onLogoutListener = new OnLogoutListener() {
+
+        @Override
+        public void onLogout() {
+            app.registerLogOut();
+            app.registerLogOutFacebook();
+            Util.showToastShort(MainActivity.this,"facebook");
+            Util.sendAndFinish(MainActivity.this,LoginActivity.class);
+        }
+    };
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
 }

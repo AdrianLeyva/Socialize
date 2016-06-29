@@ -39,7 +39,7 @@
         android:layout_below="@+id/button_googleSignIn"
         android:layout_centerHorizontal="true"
         android:background="@drawable/facebook_sing_in"
-        android:onClick="doLogin"/>
+        android:onClick="doSignInFacebook"/>
 
 
 

@@ -1,7 +1,5 @@
 package teamprogra.app.socialize.socialize;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,8 +11,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.sromku.simple.fb.Permission;
+import com.sromku.simple.fb.SimpleFacebook;
+import com.sromku.simple.fb.entities.Profile;
+import com.sromku.simple.fb.listeners.OnLoginListener;
+import com.sromku.simple.fb.listeners.OnProfileListener;
+import com.sromku.simple.fb.utils.Attributes;
+import com.sromku.simple.fb.utils.PictureAttributes;
+
+
+import java.util.List;
+
 import teamprogra.app.domain.User;
-import teamprogra.app.persistence.SocializeSQLiteOpenHelper;
+
 import teamprogra.app.util.Util;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
@@ -24,16 +33,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient mGoogleApiClient;
     private int RC_SIGN_IN = 1000;
     private User user;
+    private SimpleFacebook mSimpleFacebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //hace la actividad FULLSCREEN
-        //....
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
         configureGoogleApi();
+        user = new User();
+        app = (SocializeApplication) getApplicationContext();
+
     }
 
     @Override
@@ -48,18 +60,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
+        mSimpleFacebook = SimpleFacebook.getInstance(this);
     }
 
     @Override
@@ -68,33 +71,105 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mGoogleApiClient.connect();
     }
 
+
+    public void doSignInFacebook(View view){
+        mSimpleFacebook.login(onLoginListener);
+    }
+
+    private OnLoginListener onLoginListener = new OnLoginListener() {
+        @Override
+        public void onLogin(String accessToken, List<Permission> acceptedPermissions, List<Permission> declinedPermissions) {
+
+            PictureAttributes pictureAttributes = Attributes.createPictureAttributes();
+            pictureAttributes.setHeight(500);
+            pictureAttributes.setWidth(500);
+            pictureAttributes.setType(PictureAttributes.PictureType.NORMAL);
+
+
+            Profile.Properties properties = new Profile.Properties.Builder()
+                    .add(Profile.Properties.ID)
+                    .add(Profile.Properties.NAME)
+                    .add(Profile.Properties.EMAIL)
+                    .add(Profile.Properties.PICTURE,pictureAttributes)
+                    .add(Profile.Properties.BIRTHDAY)
+                    .add(Profile.Properties.GENDER)
+                    .add(Profile.Properties.WORK)
+                    .build();
+            mSimpleFacebook.getProfile(properties, onProfileListener);
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+
+        @Override
+        public void onException(Throwable throwable) {
+
+        }
+
+        @Override
+        public void onFail(String reason) {
+            Util.showToastShort(LoginActivity.this,"Hubo un error, intente nuevamente.");
+        }
+    };
+
+
+    OnProfileListener onProfileListener = new OnProfileListener() {
+        @Override
+        public void onComplete(Profile profile) {
+            app.registerLogIn();
+            app.registerSignInFacebook();
+            app.registerUserData(profile);
+            Util.sendAndFinish(LoginActivity.this,ModosActivity.class);
+        }
+
+        @Override
+        public void onException(Throwable throwable) {
+            super.onException(throwable);
+        }
+
+        @Override
+        public void onFail(String reason) {
+            super.onFail(reason);
+        }
+
+        @Override
+        public void onThinking() {
+            super.onThinking();
+        }
+    };
+
+
     public void doSignInGoogle(View view){
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
-
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mSimpleFacebook.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from
-        //   GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-                GoogleSignInAccount acct = result.getSignInAccount();
-                // Get account information
-                user = new User(acct.getDisplayName(),acct.getEmail());
-                app = (SocializeApplication) getApplicationContext();
-                app.registerLogIn();
-                app.registerSignInGoogle();
-                Util.showToastShort(this,user.getName());
-                Util.sendAndFinish(this,ModosActivity.class);
-            }
-            else {
-                Util.showToastShort(this,"Error al obtener los datos");
-            }
+        /*
+            // Result returned from launching the Intent from
+            //   GoogleSignInApi.getSignInIntent(...);
+            if (requestCode == RC_SIGN_IN) {
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                if (result.isSuccess()) {
+                    GoogleSignInAccount acct = result.getSignInAccount();
+                    // Get account information
+                    user.setId(acct.getId());
+                    user.setName(acct.getDisplayName());
+                    user.setEmail(acct.getEmail());
+                    // Register app login
+                    app.registerLogIn();
+                    app.registerSignInGoogle();
+                    Util.sendAndFinish(LoginActivity.this, RegisterActivity.class);
+                }
+                else {
+                    Util.showToastShort(this,"Error al obtener los datos");
+                }
         }
+        */
     }
 
     @Override
@@ -117,18 +192,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
     }
-
-    public void saveUserData(User user){
-        SocializeSQLiteOpenHelper admin = new SocializeSQLiteOpenHelper(this,
-                                            SocializeSQLiteOpenHelper.getDataBaseSocialize(),null,
-                                            SocializeSQLiteOpenHelper.getDataBaseVersion());
-        SQLiteDatabase bd = admin.getWritableDatabase();
-
-        ContentValues registry = new ContentValues();
-        registry.put("name",user.getName());
-        registry.put("email",user.getEmail());
-
-        bd.insert("User",null,registry);
-        bd.close();
+/*
+    public void saveDataUser(){
+        Gson userJson = new Gson();
+        String userSerialize = userJson.toJson(user);
+        app.saveValuePreferences(app.getAppKeyUserData(),userSerialize);
     }
+    */
 }

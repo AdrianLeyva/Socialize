@@ -3,6 +3,13 @@ package teamprogra.app.socialize.socialize;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.sromku.simple.fb.Permission;
+import com.sromku.simple.fb.SimpleFacebook;
+import com.sromku.simple.fb.SimpleFacebookConfiguration;
+import com.sromku.simple.fb.entities.Profile;
+
 
 /**
  * Created by leyva on 20/06/2016.
@@ -15,11 +22,34 @@ public class SocializeApplication extends Application{
     private static final String APP_KEY_IS_LOGIN_START = "APP_KEY_IS_LOGIN_START";
     private static final String APP_KEY_IS_SIGN_IN_WITH_GOOGLE = "APP_KEY_IS_LOGIN_WITH_GOOGLE";
     private static final String APP_KEY_IS_SIGN_IN_WITH_FACEBOOK = "APP_KEY_IS_LOGIN_WITH_FACEBOOK";
+    public static final String APP_VALUE_ID = "APP_VALUE_ID";
+    public static final String APP_VALUE_NAME = "APP_VALUE_NAME";
+    public static final String APP_VALUE_EMAIL = "APP_VALUE_EMAIL";
+    public static final String APP_VALUE_PICTURE = "APP_VALUE_PICTURE";
+    public static final String APP_VALUE_BIRTHDAY = "APP_VALUE_BIRTHDAY";
+    public static final String APP_VALUE_GENDER = "APP_VALUE_GENDER";
+
+
+    Permission[] permissions = new Permission[] {
+            Permission.USER_BIRTHDAY,
+            Permission.USER_PHOTOS,
+            Permission.USER_WORK_HISTORY,
+            Permission.EMAIL,
+    };
 
     @Override
     public void onCreate() {
         super.onCreate();
         preferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+
+        SimpleFacebookConfiguration configuration = new SimpleFacebookConfiguration.Builder()
+                .setAppId("@strings/facebook_app_id")
+                .setNamespace("Socialize")
+                .setPermissions(permissions)
+                .build();
+        SimpleFacebook.setConfiguration(configuration);
     }
 
     public void registerLogIn(){
@@ -50,11 +80,20 @@ public class SocializeApplication extends Application{
         saveValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_FACEBOOK,false);
     }
 
+    public void registerUserData(Profile profile){
+        saveValuePreferences(SocializeApplication.APP_VALUE_ID, profile.getId());
+        saveValuePreferences(SocializeApplication.APP_VALUE_NAME, profile.getName());
+        saveValuePreferences(SocializeApplication.APP_VALUE_EMAIL, profile.getEmail());
+        saveValuePreferences(SocializeApplication.APP_VALUE_PICTURE, profile.getPicture());
+        saveValuePreferences(SocializeApplication.APP_VALUE_BIRTHDAY, profile.getBirthday());
+        saveValuePreferences(SocializeApplication.APP_VALUE_GENDER, profile.getGender());
+    }
+
     public boolean isSignInGoogle(){
         return getBooleanRegisterValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_GOOGLE);
     }
 
-    public boolean isSignInFacebook(String key){
+    public boolean isSignInFacebook(){
         return getBooleanRegisterValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_FACEBOOK);
     }
 
@@ -64,6 +103,7 @@ public class SocializeApplication extends Application{
         editor.putString(key,value);
         editor.commit();
     }
+
 
     public void saveValuePreferences(String key, boolean value){
         SharedPreferences.Editor editor = preferences.edit();
@@ -86,4 +126,29 @@ public class SocializeApplication extends Application{
     public void setPreferences(SharedPreferences preferences) {
         this.preferences = preferences;
     }
+
+    public static String getAppValueId() {
+        return APP_VALUE_ID;
+    }
+
+    public static String getAppValueName() {
+        return APP_VALUE_NAME;
+    }
+
+    public static String getAppValueEmail() {
+        return APP_VALUE_EMAIL;
+    }
+
+    public static String getAppValuePicture() {
+        return APP_VALUE_PICTURE;
+    }
+
+    public static String getAppValueBirthday() {
+        return APP_VALUE_BIRTHDAY;
+    }
+
+    public static String getAppValueGender() {
+        return APP_VALUE_GENDER;
+    }
+
 }

@@ -9,16 +9,21 @@ import com.google.gson.Gson;
  */
 public class User {
 
+    private String id;
     private String name;
     private String email;
-    private Uri photo;
-    private int age;
+    private String photo;
+    private String birthday;
     private String occupation;
     private String ubication;
     private String gender;
     private long phone;
     private int organizedEvents;
     private int score;
+
+    public User(){
+
+    }
 
     public User(String name, String email) {
         this.name = name;
@@ -34,14 +39,14 @@ public class User {
         return userJson.toJson(this);
     }
 
-    /**
-     * Creación del objeto desde el jSon
-     */
-    public static User createUserFromJson(String userJson){
-        Gson objectJson = new Gson();
-        return objectJson.fromJson(userJson, User.class);
+
+    public String getId() {
+        return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -59,20 +64,20 @@ public class User {
         this.email = email;
     }
 
-    public Uri getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Uri photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
-    public int getAge() {
-        return age;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setBirthday(String  birthday) {
+        this.birthday = birthday;
     }
 
     public String getOccupation() {
