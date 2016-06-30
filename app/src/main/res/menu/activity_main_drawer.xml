@@ -3,7 +3,12 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Perfil"/>
+
+        <item
+            android:id="@+id/nav_userData"
             android:icon="@drawable/ic_mode_edit_black_24dp"
             android:title="Modificar datos" />
         <item
@@ -18,6 +23,11 @@
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="Configuración" />
+        <item
+            android:id="@+id/nav_logOut"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="Cerrar sesión"
+            />
     </group>
 
     <item android:title="Acerca de">

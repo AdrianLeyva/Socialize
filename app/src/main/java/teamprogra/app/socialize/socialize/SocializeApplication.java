@@ -28,6 +28,7 @@ public class SocializeApplication extends Application{
     public static final String APP_VALUE_PICTURE = "APP_VALUE_PICTURE";
     public static final String APP_VALUE_BIRTHDAY = "APP_VALUE_BIRTHDAY";
     public static final String APP_VALUE_GENDER = "APP_VALUE_GENDER";
+    public static final String APP_VALUE_LOCALE = "APP_VALUE_LOCALE";
 
 
     Permission[] permissions = new Permission[] {
@@ -35,6 +36,7 @@ public class SocializeApplication extends Application{
             Permission.USER_PHOTOS,
             Permission.USER_WORK_HISTORY,
             Permission.EMAIL,
+            Permission.USER_LOCATION
     };
 
     @Override
@@ -87,7 +89,9 @@ public class SocializeApplication extends Application{
         saveValuePreferences(SocializeApplication.APP_VALUE_PICTURE, profile.getPicture());
         saveValuePreferences(SocializeApplication.APP_VALUE_BIRTHDAY, profile.getBirthday());
         saveValuePreferences(SocializeApplication.APP_VALUE_GENDER, profile.getGender());
+        saveValuePreferences(SocializeApplication.APP_VALUE_LOCALE, profile.getLocation().getName());
     }
+
 
     public boolean isSignInGoogle(){
         return getBooleanRegisterValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_GOOGLE);

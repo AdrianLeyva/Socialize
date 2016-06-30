@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             PictureAttributes pictureAttributes = Attributes.createPictureAttributes();
             pictureAttributes.setHeight(500);
             pictureAttributes.setWidth(500);
-            pictureAttributes.setType(PictureAttributes.PictureType.NORMAL);
+            pictureAttributes.setType(PictureAttributes.PictureType.SQUARE);
 
 
             Profile.Properties properties = new Profile.Properties.Builder()
@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     .add(Profile.Properties.BIRTHDAY)
                     .add(Profile.Properties.GENDER)
                     .add(Profile.Properties.WORK)
+                    .add(Profile.Properties.LOCATION)
                     .build();
             mSimpleFacebook.getProfile(properties, onProfileListener);
         }

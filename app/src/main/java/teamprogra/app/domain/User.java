@@ -15,7 +15,7 @@ public class User {
     private String photo;
     private String birthday;
     private String occupation;
-    private String ubication;
+    private String locale;
     private String gender;
     private long phone;
     private int organizedEvents;
@@ -88,14 +88,6 @@ public class User {
         this.occupation = occupation;
     }
 
-    public String getUbication() {
-        return ubication;
-    }
-
-    public void setUbication(String ubication) {
-        this.ubication = ubication;
-    }
-
     public String getGender() {
         return gender;
     }
@@ -126,5 +118,13 @@ public class User {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 }

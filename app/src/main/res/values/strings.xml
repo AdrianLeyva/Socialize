@@ -22,4 +22,7 @@
 
     <string name="facebook_app_id">1782592888627342</string>
     <string name="app_id_authorities">com.facebook.app.FacebookContentProvider728615400528729</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,0 +1,154 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlack"
+    tools:context="teamprogra.app.fragment.FragmentDataUser">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView_userImageDU"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <Button
+            android:id="@+id/button_setImageDU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/imageView_userImageDU"
+            android:background="@color/colorAccent"
+            android:text="cambiar imagen"
+            android:textSize="10sp"
+            android:textColor="@color/colorWhite"/>
+
+        <EditText
+            android:id="@+id/editText_nameDU"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/button_setImageDU"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorBlack"
+            android:hint="Nombre del usuario"
+            android:background="@color/colorWhite"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/editText_emailDU"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editText_nameDU"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorBlack"
+            android:hint="Email del usuario"
+            android:background="@color/colorWhite"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/editText_ubicationDU"
+            android:layout_below="@id/editText_emailDU"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorBlack"
+            android:hint="ubicación"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:focusable="false"/>
+
+        <EditText
+            android:id="@+id/editText_phoneDU"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editText_ubicationDU"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:inputType="phone"
+            android:ems="10"
+            android:textSize="20sp"
+            android:textColor="@color/colorBlack"
+            android:hint="Número celular"
+            android:background="@color/colorWhite"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/editText_birthdayDU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editText_phoneDU"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorBlack"
+            android:hint="día/mes/año"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:focusable="false"/>
+
+        <Button
+            android:id="@+id/button_configBirthdayDU"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/editText_birthdayDU"
+            android:layout_alignBaseline="@id/editText_birthdayDU"
+            android:background="@drawable/ic_build_white_24dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroup_generoDU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/editText_birthdayDU"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButton_masculinoDU"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:text="Masculino"
+                android:textColor="@color/colorWhite"/>
+
+            <RadioButton
+                android:id="@+id/radioButton_femeninoDU"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:text="Femenino"
+                android:textColor="@color/colorWhite"/>
+        </RadioGroup>
+
+
+        <Button
+            android:id="@+id/button_saveDU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/radioGroup_generoDU"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="10sp"
+            android:text="Guardar"
+            android:background="@color/colorAccent"/>
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>
