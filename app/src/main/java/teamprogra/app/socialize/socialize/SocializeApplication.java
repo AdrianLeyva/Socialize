@@ -5,16 +5,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.orm.SugarApp;
+import com.orm.SugarContext;
 import com.sromku.simple.fb.Permission;
 import com.sromku.simple.fb.SimpleFacebook;
 import com.sromku.simple.fb.SimpleFacebookConfiguration;
 import com.sromku.simple.fb.entities.Profile;
 
+import teamprogra.app.domain.User;
+
 
 /**
  * Created by leyva on 20/06/2016.
  */
-public class SocializeApplication extends Application{
+public class SocializeApplication extends SugarApp{
 
     private static final String APP_PREFERENCES = "APP_PREFERENCES";
     private SharedPreferences preferences;
@@ -22,6 +26,8 @@ public class SocializeApplication extends Application{
     private static final String APP_KEY_IS_LOGIN_START = "APP_KEY_IS_LOGIN_START";
     private static final String APP_KEY_IS_SIGN_IN_WITH_GOOGLE = "APP_KEY_IS_LOGIN_WITH_GOOGLE";
     private static final String APP_KEY_IS_SIGN_IN_WITH_FACEBOOK = "APP_KEY_IS_LOGIN_WITH_FACEBOOK";
+
+    public static final String APP_ID_USER = "APP_ID_USER";
     public static final String APP_VALUE_ID = "APP_VALUE_ID";
     public static final String APP_VALUE_NAME = "APP_VALUE_NAME";
     public static final String APP_VALUE_EMAIL = "APP_VALUE_EMAIL";
@@ -29,6 +35,7 @@ public class SocializeApplication extends Application{
     public static final String APP_VALUE_BIRTHDAY = "APP_VALUE_BIRTHDAY";
     public static final String APP_VALUE_GENDER = "APP_VALUE_GENDER";
     public static final String APP_VALUE_LOCALE = "APP_VALUE_LOCALE";
+    public static final String APP_VALUE_PHONE = "APP_VALUE_PHONE";
 
 
     Permission[] permissions = new Permission[] {
@@ -52,6 +59,7 @@ public class SocializeApplication extends Application{
                 .setPermissions(permissions)
                 .build();
         SimpleFacebook.setConfiguration(configuration);
+        SugarContext.init(this);
     }
 
     public void registerLogIn(){
@@ -90,6 +98,16 @@ public class SocializeApplication extends Application{
         saveValuePreferences(SocializeApplication.APP_VALUE_BIRTHDAY, profile.getBirthday());
         saveValuePreferences(SocializeApplication.APP_VALUE_GENDER, profile.getGender());
         saveValuePreferences(SocializeApplication.APP_VALUE_LOCALE, profile.getLocation().getName());
+
+        User user = new User();
+        user.setIdUserFacebook(profile.getId());
+        user.setName(profile.getName());
+        user.setEmail(profile.getEmail());
+        user.setPhoto(profile.getPicture());
+        user.setBirthday(profile.getBirthday());
+        user.setGender(profile.getGender());
+        user.setLocale(profile.getLocation().getName());
+        user.save();
     }
 
 

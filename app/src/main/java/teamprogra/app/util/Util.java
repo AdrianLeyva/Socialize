@@ -13,8 +13,16 @@ public class Util {
 
     //Abre una nueva actividad y cierra la anterior
     public static void sendAndFinish(Activity activity, Class clase){
-        Intent mainIntent = new Intent().setClass(activity,clase);
-        activity.startActivity(mainIntent);
+        Intent i = new Intent(activity,clase);
+        activity.startActivity(i);
+        activity.finish();
+    }
+
+    //Abre una nueva actividad y cierra la anterior sin guardarla en stack
+    public static void sendAndFinishNoHistory(Activity activity, Class clase){
+        Intent i = new Intent(activity,clase);
+        i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        activity.startActivity(i);
         activity.finish();
     }
 

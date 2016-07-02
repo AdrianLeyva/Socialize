@@ -66,9 +66,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         user.setBirthday((editTextAge.getText().toString()));
         int radioButtonCheckedId = radioGroupGender.getCheckedRadioButtonId();
         RadioButton radioButtonChecked = (RadioButton)findViewById(radioButtonCheckedId);
-        user.setGender(radioButtonChecked.getText().toString());
-        user.setPhone(Long.valueOf(editTextPhone.getText().toString()));
-    }
+        user.setGender(radioButtonChecked.getText().toString());}
 
     public void finalizeRegister(View view){
         getUserData();

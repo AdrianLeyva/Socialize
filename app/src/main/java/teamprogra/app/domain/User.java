@@ -1,15 +1,14 @@
 package teamprogra.app.domain;
 
-import android.net.Uri;
-
 import com.google.gson.Gson;
+import com.orm.SugarRecord;
 
 /**
  * Created by adrianleyva on 25/06/16.
  */
-public class User {
+public class User extends SugarRecord{
 
-    private String id;
+    private String idUserFacebook;
     private String name;
     private String email;
     private String photo;
@@ -17,7 +16,7 @@ public class User {
     private String occupation;
     private String locale;
     private String gender;
-    private long phone;
+    private String phone;
     private int organizedEvents;
     private int score;
 
@@ -39,13 +38,12 @@ public class User {
         return userJson.toJson(this);
     }
 
-
-    public String getId() {
-        return id;
+    public String getIdUserFacebook() {
+        return idUserFacebook;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdUserFacebook(String idUserFacebook) {
+        this.idUserFacebook = idUserFacebook;
     }
 
     public String getName() {
@@ -96,14 +94,6 @@ public class User {
         this.gender = gender;
     }
 
-    public long getPhone() {
-        return phone;
-    }
-
-    public void setPhone(long phone) {
-        this.phone = phone;
-    }
-
     public int getOrganizedEvents() {
         return organizedEvents;
     }
@@ -126,5 +116,13 @@ public class User {
 
     public void setLocale(String locale) {
         this.locale = locale;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

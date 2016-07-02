@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.orm.SugarContext;
 import com.sromku.simple.fb.Permission;
 import com.sromku.simple.fb.SimpleFacebook;
 import com.sromku.simple.fb.entities.Profile;
@@ -20,6 +21,7 @@ import com.sromku.simple.fb.utils.Attributes;
 import com.sromku.simple.fb.utils.PictureAttributes;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import teamprogra.app.domain.User;
@@ -45,12 +47,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         configureGoogleApi();
         user = new User();
         app = (SocializeApplication) getApplicationContext();
-
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
     }
 
     @Override
@@ -73,7 +69,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
     public void doSignInFacebook(View view){
-        mSimpleFacebook.login(onLoginListener);
+        Thread threadAccess = new Thread(){
+            public void run(){
+                mSimpleFacebook.login(onLoginListener);
+            }
+        };
+        threadAccess.start();
     }
 
     private OnLoginListener onLoginListener = new OnLoginListener() {
@@ -111,7 +112,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         @Override
         public void onFail(String reason) {
-            Util.showToastShort(LoginActivity.this,"Hubo un error, intente nuevamente.");
+            Util.showToastShort(LoginActivity.this,"Ha ocurrido un error, intente nuevamente.");
         }
     };
 
@@ -119,9 +120,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     OnProfileListener onProfileListener = new OnProfileListener() {
         @Override
         public void onComplete(Profile profile) {
-            app.registerLogIn();
-            app.registerSignInFacebook();
-            app.registerUserData(profile);
+
+           List<User> user = User.find(User.class,"id_user_facebook = ?",profile.getId());
+            if (user.isEmpty()){
+                app.registerLogIn();
+                app.registerSignInFacebook();
+                app.registerUserData(profile);
+            }
             Util.sendAndFinish(LoginActivity.this,ModosActivity.class);
         }
 

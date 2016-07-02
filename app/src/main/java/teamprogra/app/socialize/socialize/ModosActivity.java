@@ -20,37 +20,19 @@ public class ModosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modos);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
+        finish();
     }
 
     public void goAnfitrion(View view){
-        Util.sendAndFinish(ModosActivity.this,MainActivity.class);
+        Thread threadGo = new Thread(){
+            public void run(){
+                Util.sendAndFinish(ModosActivity.this,MainActivity.class);
+            }
+        };
+        threadGo.start();
     }
 }

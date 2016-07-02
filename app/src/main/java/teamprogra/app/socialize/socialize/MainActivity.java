@@ -62,9 +62,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        mSimpleFacebook = SimpleFacebook.getInstance(this);
         app = (SocializeApplication) getApplicationContext();
         user = new User();
-        getUserData();
 
         View headerView = navigationView.getHeaderView(0);
         imageViewProfile = (ImageView) headerView.findViewById(R.id.imageView);
@@ -76,11 +76,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        mSimpleFacebook = SimpleFacebook.getInstance(this);
+        getUserData();
         textViewName.setText(user.getName());
         textViewEmail.setText(user.getEmail());
-        Picasso.with(this).load(user.getPhoto()).transform(new CircleTransform()).into(imageViewProfile);
-
+        Picasso.with(getApplicationContext()).load(user.getPhoto()).error(R.drawable.login_user).transform(new CircleTransform()).into(imageViewProfile);
     }
 
     @Override
@@ -141,7 +140,7 @@ public class MainActivity extends AppCompatActivity
         user.setName(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_NAME));
         user.setEmail(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_EMAIL));
         user.setBirthday(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_BIRTHDAY));
-        user.setId(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_ID));
+        user.setIdUserFacebook(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_ID));
         user.setGender(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_GENDER));
         user.setPhoto(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_PICTURE));
         user.setLocale(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_LOCALE));
@@ -154,7 +153,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        Util.showToastShort(MainActivity.this,"Revise su conexión a Internet");
     }
 
     // logout listener
@@ -164,7 +163,6 @@ public class MainActivity extends AppCompatActivity
         public void onLogout() {
             app.registerLogOut();
             app.registerLogOutFacebook();
-            Util.showToastShort(MainActivity.this,"facebook");
             Util.sendAndFinish(MainActivity.this,LoginActivity.class);
         }
     };

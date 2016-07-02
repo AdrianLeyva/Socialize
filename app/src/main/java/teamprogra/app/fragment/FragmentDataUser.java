@@ -1,9 +1,13 @@
 package teamprogra.app.fragment;
 
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +16,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import teamprogra.app.domain.User;
+import teamprogra.app.socialize.socialize.LoginActivity;
 import teamprogra.app.socialize.socialize.R;
 import teamprogra.app.socialize.socialize.SocializeApplication;
 import teamprogra.app.util.CircleTransform;
+import teamprogra.app.util.EmailValidator;
 import teamprogra.app.util.Util;
 
 /**
@@ -30,8 +35,9 @@ import teamprogra.app.util.Util;
  * Use the {@link FragmentDataUser#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentDataUser extends Fragment {
+public class FragmentDataUser extends Fragment implements View.OnClickListener {
 
+    public static final int ACTIVITY_SELECT_IMAGE = 1020;
     private User user;
     private SocializeApplication app;
     private OnFragmentInteractionListener mListener;
@@ -68,6 +74,7 @@ public class FragmentDataUser extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         app = (SocializeApplication)getActivity().getApplicationContext();
         user = new User();
         getDataUser();
@@ -77,23 +84,29 @@ public class FragmentDataUser extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_data_user,container,false);
-        imageViewUser = (ImageView)view.findViewById(R.id.imageView_userImageDU);
+
         editTextName = (EditText)view.findViewById(R.id.editText_nameDU);
         editTextEmail = (EditText)view.findViewById(R.id.editText_emailDU);
-        editTextUbication = (EditText)view.findViewById(R.id.editText_ubicationDU);
         editTextBirthDay = (EditText)view.findViewById(R.id.editText_birthdayDU);
+        editTextUbication = (EditText)view.findViewById(R.id.editText_ubicationDU);
         editTextPhone = (EditText)view.findViewById(R.id.editText_phoneDU);
-        radioGroupGender = (RadioGroup)view.findViewById(R.id.radioGroup_generoDU);
-        buttonSetImage = (Button)view.findViewById(R.id.button_setImageDU);
-        buttonSave = (Button)view.findViewById(R.id.button_saveDU);
+        buttonSetImage = (Button) view.findViewById(R.id.button_setImageDU);
         buttonSetBirthDay = (Button)view.findViewById(R.id.button_configBirthdayDU);
+        buttonSave = (Button)view.findViewById(R.id.button_saveDU);
+        imageViewUser = (ImageView)view.findViewById(R.id.imageView_userImageDU);
+        radioGroupGender = (RadioGroup)view.findViewById(R.id.radioGroup_generoDU);
 
         editTextName.setText(user.getName());
         editTextEmail.setText(user.getEmail());
         editTextBirthDay.setText(user.getBirthday());
         editTextUbication.setText(user.getLocale());
+        editTextPhone.setText(user.getPhone());
 
-        Picasso.with(getContext()).load(user.getPhoto()).transform(new CircleTransform()).into(imageViewUser);
+        buttonSetImage.setOnClickListener(this);
+        buttonSetBirthDay.setOnClickListener(this);
+        buttonSave.setOnClickListener(this);
+
+        Picasso.with(getContext()).load(user.getPhoto()).error(R.drawable.login_user).transform(new CircleTransform()).into(imageViewUser);
 
         if(user.getGender().equals("male")){
             radioButtonMale = (RadioButton) radioGroupGender.findViewById(R.id.radioButton_masculinoDU);
@@ -102,6 +115,7 @@ public class FragmentDataUser extends Fragment {
             radioButtonFemale = (RadioButton) radioGroupGender.findViewById(R.id.radioButton_femeninoDU);
             radioButtonFemale.setChecked(true);
         }
+
         return view;
     }
 
@@ -130,6 +144,37 @@ public class FragmentDataUser extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.button_setImageDU:
+                Intent galeyIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galeyIntent.setType("image/*");
+                startActivityForResult(galeyIntent, ACTIVITY_SELECT_IMAGE);
+                break;
+            case R.id.button_configBirthdayDU:
+                DialogFragment dp = new DatePickerFragment();
+                dp.show(getActivity().getFragmentManager(),"DATEPICKER");
+                break;
+            case R.id.button_saveDU:
+                if (EmailValidator.verifyEmail(editTextEmail.getText().toString())){
+                    saveDataUser();
+                    Util.showToastShort(this.getActivity(),"Datos guardados correctamente");
+                }else{
+                    Util.showToastLong(this.getActivity(),"Introduce un email válido");
+                }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ACTIVITY_SELECT_IMAGE && resultCode == getActivity().RESULT_OK){
+            user.setPhoto(data.getDataString());
+            Picasso.with(getContext()).load(user.getPhoto()).transform(new CircleTransform()).into(imageViewUser);
+        }
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -149,9 +194,24 @@ public class FragmentDataUser extends Fragment {
         user.setName(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_NAME));
         user.setEmail(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_EMAIL));
         user.setBirthday(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_BIRTHDAY));
-        user.setId(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_ID));
+        user.setIdUserFacebook(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_ID));
         user.setGender(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_GENDER));
         user.setPhoto(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_PICTURE));
         user.setLocale(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_LOCALE));
+        user.setPhone(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_PHONE));
     }
+
+    public void saveDataUser(){
+        app.saveValuePreferences(SocializeApplication.APP_VALUE_NAME,editTextName.getText().toString());
+        app.saveValuePreferences(SocializeApplication.APP_VALUE_EMAIL,editTextEmail.getText().toString());
+        app.saveValuePreferences(SocializeApplication.APP_VALUE_BIRTHDAY,editTextBirthDay.getText().toString());
+        app.saveValuePreferences(SocializeApplication.APP_VALUE_PHONE,editTextPhone.getText().toString());
+        app.saveValuePreferences(SocializeApplication.APP_VALUE_PICTURE,user.getPhoto());
+        if(radioButtonMale.isChecked()){
+            app.saveValuePreferences(SocializeApplication.APP_VALUE_GENDER,"male");
+        }else {
+            app.saveValuePreferences(SocializeApplication.APP_VALUE_GENDER,"female");
+        }
+    }
+
 }

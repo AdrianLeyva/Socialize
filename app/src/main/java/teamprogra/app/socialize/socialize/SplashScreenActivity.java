@@ -18,8 +18,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
+        app = (SocializeApplication) getApplicationContext();
         throwSplash();
-
     }
 
     @Override
@@ -31,6 +31,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        finish();
     }
 
     @Override
@@ -39,34 +40,24 @@ public class SplashScreenActivity extends AppCompatActivity {
        throwSplash();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
     public void throwSplash(){
-        app = (SocializeApplication) getApplicationContext();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if(app.isLoginStart()){
-                    Util.sendAndFinish(SplashScreenActivity.this, ModosActivity.class);
-                }
-                else{
-                    Util.sendAndFinish(SplashScreenActivity.this, LoginActivity.class);
+        final Thread timerThreed = new Thread(){
+            public void run(){
+                try{
+                    sleep(3000);
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }finally {
+                    if(app.isLoginStart()){
+                        Util.sendAndFinish(SplashScreenActivity.this, ModosActivity.class);
+                    }
+                    else{
+                        Util.sendAndFinish(SplashScreenActivity.this, LoginActivity.class);
+                    }
                 }
             }
-        },3000);
+        };
+        timerThreed.start();
     }
 }
