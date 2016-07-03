@@ -3,6 +3,8 @@ package teamprogra.app.domain;
 import com.google.gson.Gson;
 import com.orm.SugarRecord;
 
+import teamprogra.app.socialize.socialize.SocializeApplication;
+
 /**
  * Created by adrianleyva on 25/06/16.
  */
@@ -13,7 +15,6 @@ public class User extends SugarRecord{
     private String email;
     private String photo;
     private String birthday;
-    private String occupation;
     private String locale;
     private String gender;
     private String phone;
@@ -29,13 +30,17 @@ public class User extends SugarRecord{
         this.email = email;
     }
 
-    /**
-     * Serialización del objeto
-     * que será devuelto como un String en fomrato jSon
-     */
-    public String serializeUser(){
-        Gson userJson = new Gson();
-        return userJson.toJson(this);
+    public void getDataUser(SocializeApplication app){
+        setName(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_NAME));
+        setEmail(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_EMAIL));
+        setBirthday(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_BIRTHDAY));
+        setIdUserFacebook(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_ID));
+        setGender(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_GENDER));
+        setPhoto(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_PICTURE));
+        setLocale(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_LOCALE));
+        setPhone(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_PHONE));
+        setOrganizedEvents(app.getIntRegisterValuePreferences(SocializeApplication.APP_VALUE_EVENTS));
+        setScore(app.getIntRegisterValuePreferences(SocializeApplication.APP_VALUE_SCORE));
     }
 
     public String getIdUserFacebook() {
@@ -78,13 +83,6 @@ public class User extends SugarRecord{
         this.birthday = birthday;
     }
 
-    public String getOccupation() {
-        return occupation;
-    }
-
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
-    }
 
     public String getGender() {
         return gender;

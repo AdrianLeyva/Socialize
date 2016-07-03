@@ -1,7 +1,10 @@
 package teamprogra.app.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -14,14 +17,6 @@ public class Util {
     //Abre una nueva actividad y cierra la anterior
     public static void sendAndFinish(Activity activity, Class clase){
         Intent i = new Intent(activity,clase);
-        activity.startActivity(i);
-        activity.finish();
-    }
-
-    //Abre una nueva actividad y cierra la anterior sin guardarla en stack
-    public static void sendAndFinishNoHistory(Activity activity, Class clase){
-        Intent i = new Intent(activity,clase);
-        i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         activity.startActivity(i);
         activity.finish();
     }
@@ -48,5 +43,11 @@ public class Util {
     public static Object createObjectFromJson(String userJson, Class c){
         Gson objectJson = new Gson();
         return objectJson.fromJson(userJson, c.getClass());
+    }
+
+    public static boolean isOnline(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

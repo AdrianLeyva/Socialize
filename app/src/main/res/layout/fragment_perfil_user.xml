@@ -1,0 +1,124 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="teamprogra.app.fragment.FragmentPerfilUser">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBlack">
+
+        <ImageView
+            android:id="@+id/imageView_userImagePU"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/textView_userNamePU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/imageView_userImagePU"
+            android:text="User name"
+            android:textColor="@color/colorWhite"
+            android:textSize="30sp"
+            android:fontFamily="serif-monospace"/>
+
+        <TextView
+            android:id="@+id/textView_userEmailPU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textView_userNamePU"
+            android:text="User email"
+            android:textColor="@color/colorWhite"
+            android:textSize="30sp"
+            android:fontFamily="serif-monospace"/>
+
+        <TextView
+            android:id="@+id/textView_userPhonePU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textView_userEmailPU"
+            android:text="User phone"
+            android:textColor="@color/colorWhite"
+            android:textSize="30sp"
+            android:fontFamily="serif-monospace"/>
+
+        <TextView
+            android:id="@+id/textView_userUbicationPU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textView_userPhonePU"
+            android:text="User ubication"
+            android:textColor="@color/colorWhite"
+            android:textSize="30sp"
+            android:fontFamily="serif-monospace"/>
+
+        <TextView
+            android:id="@+id/textView_eventsTitlePU"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textView_userUbicationPU"
+            android:text="Eventos realizados"
+            android:textColor="@color/colorAccent"
+            android:textSize="30sp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:background="@color/colorWhite"/>
+
+        <TextView
+            android:id="@+id/textView_totalEventsPU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/textView_eventsTitlePU"
+            android:text="0"
+            android:textColor="@color/colorWhite"
+            android:textSize="40sp"
+            android:fontFamily="serif-monospace"/>
+
+        <TextView
+            android:id="@+id/textView_eventsHistorialPU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textView_totalEventsPU"
+            android:text="Ver historial"
+            android:textColor="@color/colorAccent"
+            android:textSize="30sp"
+            android:fontFamily="serif-monospace" />
+
+        <TextView
+            android:id="@+id/textView_scorePU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/textView_eventsHistorialPU"
+            android:text="Puntaje"
+            android:textColor="@color/colorWhite"
+            android:textSize="30sp"
+            android:fontFamily="serif-monospace"/>
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimaryDark"
+            android:layout_below="@id/textView_scorePU"
+            android:isIndicator="true"
+            android:numStars="5"/>
+    </RelativeLayout>
+
+
+</FrameLayout>

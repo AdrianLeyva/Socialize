@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -51,7 +52,6 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
     private RadioGroup radioGroupGender;
     private RadioButton radioButtonMale;
     private RadioButton radioButtonFemale;
-    private Button buttonSetImage;
     private Button buttonSetBirthDay;
     private Button buttonSave;
 
@@ -77,7 +77,7 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
 
         app = (SocializeApplication)getActivity().getApplicationContext();
         user = new User();
-        getDataUser();
+        user.getDataUser(app);
     }
 
     @Override
@@ -90,7 +90,6 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
         editTextBirthDay = (EditText)view.findViewById(R.id.editText_birthdayDU);
         editTextUbication = (EditText)view.findViewById(R.id.editText_ubicationDU);
         editTextPhone = (EditText)view.findViewById(R.id.editText_phoneDU);
-        buttonSetImage = (Button) view.findViewById(R.id.button_setImageDU);
         buttonSetBirthDay = (Button)view.findViewById(R.id.button_configBirthdayDU);
         buttonSave = (Button)view.findViewById(R.id.button_saveDU);
         imageViewUser = (ImageView)view.findViewById(R.id.imageView_userImageDU);
@@ -102,7 +101,7 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
         editTextUbication.setText(user.getLocale());
         editTextPhone.setText(user.getPhone());
 
-        buttonSetImage.setOnClickListener(this);
+        imageViewUser.setOnClickListener(this);
         buttonSetBirthDay.setOnClickListener(this);
         buttonSave.setOnClickListener(this);
 
@@ -147,7 +146,7 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.button_setImageDU:
+            case R.id.imageView_userImageDU:
                 Intent galeyIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 galeyIntent.setType("image/*");
                 startActivityForResult(galeyIntent, ACTIVITY_SELECT_IMAGE);
@@ -157,12 +156,26 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
                 dp.show(getActivity().getFragmentManager(),"DATEPICKER");
                 break;
             case R.id.button_saveDU:
-                if (EmailValidator.verifyEmail(editTextEmail.getText().toString())){
-                    saveDataUser();
-                    Util.showToastShort(this.getActivity(),"Datos guardados correctamente");
+                if(Util.isOnline(getContext())){
+                    if (EmailValidator.verifyEmail(editTextEmail.getText().toString())){
+                        saveDataUser();
+                        Util.showToastShort(this.getActivity(),"Datos guardados correctamente");
+                    }else{
+                        Util.showToastLong(this.getActivity(),"Introduce un email válido");
+                    }
                 }else{
-                    Util.showToastLong(this.getActivity(),"Introduce un email válido");
+                    Snackbar.make(view, "Error, verifique su conexión a Internet", Snackbar.LENGTH_LONG)
+                            //.setActionTextColor(Color.CYAN)
+                            .setActionTextColor(getResources().getColor(R.color.colorAccent))
+                            .setAction("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .show();
                 }
+
         }
     }
 
@@ -190,16 +203,6 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void getDataUser(){
-        user.setName(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_NAME));
-        user.setEmail(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_EMAIL));
-        user.setBirthday(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_BIRTHDAY));
-        user.setIdUserFacebook(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_ID));
-        user.setGender(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_GENDER));
-        user.setPhoto(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_PICTURE));
-        user.setLocale(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_LOCALE));
-        user.setPhone(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_PHONE));
-    }
 
     public void saveDataUser(){
         app.saveValuePreferences(SocializeApplication.APP_VALUE_NAME,editTextName.getText().toString());

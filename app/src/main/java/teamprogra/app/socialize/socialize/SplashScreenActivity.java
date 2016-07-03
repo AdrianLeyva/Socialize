@@ -1,6 +1,8 @@
 package teamprogra.app.socialize.socialize;
 
+import android.content.DialogInterface;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
@@ -41,23 +43,43 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     public void throwSplash(){
-
-        final Thread timerThreed = new Thread(){
-            public void run(){
-                try{
-                    sleep(3000);
-                }catch (InterruptedException e){
-                    e.printStackTrace();
-                }finally {
-                    if(app.isLoginStart()){
-                        Util.sendAndFinish(SplashScreenActivity.this, ModosActivity.class);
-                    }
-                    else{
-                        Util.sendAndFinish(SplashScreenActivity.this, LoginActivity.class);
+        if(Util.isOnline(getApplicationContext())){
+            final Thread timerThreed = new Thread(){
+                public void run(){
+                    try{
+                        sleep(3000);
+                    }catch (InterruptedException e){
+                        e.printStackTrace();
+                    }finally {
+                        if(app.isLoginStart()){
+                            Util.sendAndFinish(SplashScreenActivity.this, ModosActivity.class);
+                        }
+                        else{
+                            Util.sendAndFinish(SplashScreenActivity.this, LoginActivity.class);
+                        }
                     }
                 }
-            }
-        };
-        timerThreed.start();
+            };
+            timerThreed.start();
+        }else {
+            new AlertDialog.Builder(this)
+                    .setCancelable(false)
+                    .setTitle("Conexión a Internet fallida")
+                    .setMessage("¿Quiere intentar de nuevo?")
+                    .setPositiveButton("Reintentar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                           throwSplash();
+                        }
+                    })
+                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+
+
     }
 }

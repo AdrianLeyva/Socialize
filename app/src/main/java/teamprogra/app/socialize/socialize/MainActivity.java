@@ -28,12 +28,19 @@ import com.sromku.simple.fb.listeners.OnLogoutListener;
 
 import teamprogra.app.domain.User;
 import teamprogra.app.fragment.FragmentDataUser;
+import teamprogra.app.fragment.FragmentPerfilUser;
 import teamprogra.app.util.CircleTransform;
 import teamprogra.app.util.Util;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks,
-            GoogleApiClient.OnConnectionFailedListener,FragmentDataUser.OnFragmentInteractionListener{
+            GoogleApiClient.OnConnectionFailedListener,FragmentDataUser.OnFragmentInteractionListener,
+            FragmentPerfilUser.OnFragmentInteractionListener{
+
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+    FragmentPerfilUser fragmentPerfilUser;
+    FragmentDataUser fragmentDataUser;
 
     private SocializeApplication app;
     private User user;
@@ -70,13 +77,19 @@ public class MainActivity extends AppCompatActivity
         imageViewProfile = (ImageView) headerView.findViewById(R.id.imageView);
         textViewName = (TextView)headerView.findViewById(R.id.textView_userNameMA);
         textViewEmail = (TextView)headerView.findViewById(R.id.textView_emailUserMA);
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentPerfilUser = FragmentPerfilUser.newInstance();
+        fragmentTransaction.replace(R.id.container,fragmentPerfilUser);
+        fragmentTransaction.commit();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getUserData();
+        user.getDataUser(app);
+        //getUserData();
         textViewName.setText(user.getName());
         textViewEmail.setText(user.getEmail());
         Picasso.with(getApplicationContext()).load(user.getPhoto()).error(R.drawable.login_user).transform(new CircleTransform()).into(imageViewProfile);
@@ -107,14 +120,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home){
-
-
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentPerfilUser = FragmentPerfilUser.newInstance();
+            fragmentTransaction.replace(R.id.container,fragmentPerfilUser);
+            fragmentTransaction.commit();
         }
         else if(id == R.id.nav_userData){
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            FragmentDataUser fragment = FragmentDataUser.newInstance();
-            fragmentTransaction.add(R.id.container, fragment);
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentDataUser = FragmentDataUser.newInstance();
+            fragmentTransaction.replace(R.id.container, fragmentDataUser);
             fragmentTransaction.commit();
         }
 
@@ -136,15 +150,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void getUserData(){
-        user.setName(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_NAME));
-        user.setEmail(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_EMAIL));
-        user.setBirthday(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_BIRTHDAY));
-        user.setIdUserFacebook(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_ID));
-        user.setGender(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_GENDER));
-        user.setPhoto(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_PICTURE));
-        user.setLocale(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_LOCALE));
-    }
 
     @Override
     public void onConnected(Bundle bundle) {

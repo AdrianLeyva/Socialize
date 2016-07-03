@@ -27,7 +27,6 @@ public class SocializeApplication extends SugarApp{
     private static final String APP_KEY_IS_SIGN_IN_WITH_GOOGLE = "APP_KEY_IS_LOGIN_WITH_GOOGLE";
     private static final String APP_KEY_IS_SIGN_IN_WITH_FACEBOOK = "APP_KEY_IS_LOGIN_WITH_FACEBOOK";
 
-    public static final String APP_ID_USER = "APP_ID_USER";
     public static final String APP_VALUE_ID = "APP_VALUE_ID";
     public static final String APP_VALUE_NAME = "APP_VALUE_NAME";
     public static final String APP_VALUE_EMAIL = "APP_VALUE_EMAIL";
@@ -36,12 +35,13 @@ public class SocializeApplication extends SugarApp{
     public static final String APP_VALUE_GENDER = "APP_VALUE_GENDER";
     public static final String APP_VALUE_LOCALE = "APP_VALUE_LOCALE";
     public static final String APP_VALUE_PHONE = "APP_VALUE_PHONE";
+    public static final String APP_VALUE_EVENTS = "APP_VALUE_EVENTS";
+    public static final String APP_VALUE_SCORE = "APP_VALUE_SCORE";
 
 
     Permission[] permissions = new Permission[] {
             Permission.USER_BIRTHDAY,
             Permission.USER_PHOTOS,
-            Permission.USER_WORK_HISTORY,
             Permission.EMAIL,
             Permission.USER_LOCATION
     };
@@ -133,12 +133,22 @@ public class SocializeApplication extends SugarApp{
         editor.commit();
     }
 
+    public void saveValuePreferences(String key,int value){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(key,value);
+        editor.commit();
+    }
+
     public String getStringRegisterValuePreferences(String key){
         return preferences.getString(key,null);
     }
 
     public boolean getBooleanRegisterValuePreferences(String key){
         return preferences.getBoolean(key,false);
+    }
+
+    public int getIntRegisterValuePreferences(String key){
+        return preferences.getInt(key,0);
     }
 
     public SharedPreferences getPreferences() {

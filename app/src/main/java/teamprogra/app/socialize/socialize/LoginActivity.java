@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
+
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -30,6 +32,7 @@ import teamprogra.app.util.Util;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
 
+    private ProgressBar progressBar;
     private SocializeApplication app;
     private GoogleSignInOptions gso;
     private GoogleApiClient mGoogleApiClient;
@@ -45,36 +48,34 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
         configureGoogleApi();
+        mSimpleFacebook = SimpleFacebook.getInstance(this);
         user = new User();
         app = (SocializeApplication) getApplicationContext();
+        progressBar = (ProgressBar)findViewById(R.id.progressBarLogin);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mGoogleApiClient.disconnect();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mSimpleFacebook = SimpleFacebook.getInstance(this);
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mGoogleApiClient.connect();
-    }
-
 
     public void doSignInFacebook(View view){
-        Thread threadAccess = new Thread(){
-            public void run(){
-                mSimpleFacebook.login(onLoginListener);
-            }
-        };
-        threadAccess.start();
+        if(Util.isOnline(getApplicationContext())){
+            Thread threadAccess = new Thread(){
+                public void run(){
+                    mSimpleFacebook.login(onLoginListener);
+                }
+            };
+            threadAccess.start();
+        }else {
+            Util.showToastLong(this,"Verifique su conexión a Internet");
+        }
+
     }
 
     private OnLoginListener onLoginListener = new OnLoginListener() {
@@ -94,7 +95,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     .add(Profile.Properties.PICTURE,pictureAttributes)
                     .add(Profile.Properties.BIRTHDAY)
                     .add(Profile.Properties.GENDER)
-                    .add(Profile.Properties.WORK)
                     .add(Profile.Properties.LOCATION)
                     .build();
             mSimpleFacebook.getProfile(properties, onProfileListener);
@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     OnProfileListener onProfileListener = new OnProfileListener() {
         @Override
         public void onComplete(Profile profile) {
-
+            progressBar.setVisibility(View.VISIBLE);
            List<User> user = User.find(User.class,"id_user_facebook = ?",profile.getId());
             if (user.isEmpty()){
                 app.registerLogIn();
@@ -148,6 +148,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
     public void doSignInGoogle(View view){
+        mGoogleApiClient.connect();
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
