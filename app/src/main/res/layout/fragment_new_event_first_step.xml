@@ -1,0 +1,138 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="teamprogra.app.fragment.FragmentNewEventFirstStep"
+    android:background="@drawable/backgroud_first_step">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBlack"
+        android:alpha=".8">
+
+        <EditText
+            android:id="@+id/textView_EventNameFS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:gravity="center"
+            android:hint="Introduce el nombre del evento"
+            android:singleLine="true"
+            android:textColorHint="@color/colorWhite"
+            android:textColor="@color/colorWhite"
+            android:backgroundTint="@color/colorAccent"/>
+
+        <Spinner
+            android:id="@+id/spinner_eventCategoryFS"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_below="@id/textView_EventNameFS"
+            android:gravity="center"
+            android:background="@color/colorPrimaryLight"
+            android:textAlignment="center">
+        </Spinner>
+
+        <EditText
+            android:id="@+id/editText_eventDescriptionFS"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_below="@id/spinner_eventCategoryFS"
+            android:gravity="center"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:hint="Describe la razón del evento..."
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"/>
+
+        <ListView
+            android:id="@+id/listView_rulesFS"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_below="@id/editText_eventDescriptionFS"
+            android:background="@color/colorPrimaryLight"/>
+
+        <EditText
+            android:id="@+id/editText_addRulesFS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_below="@id/listView_rulesFS"
+            android:gravity="center"
+            android:singleLine="true"
+            android:backgroundTint="@color/colorAccent"
+            android:hint="Introduce las reglas aquí..."
+            android:textColorHint="@color/colorWhite"
+            android:textColor="@color/colorWhite"/>
+
+        <Button
+            android:id="@+id/button_addRulesFS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editText_addRulesFS"
+            android:layout_centerHorizontal="true"
+            android:text="Agregar"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorPrimary"/>
+
+        <EditText
+            android:id="@+id/editText_dateFS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/button_addRulesFS"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:gravity="center"
+            android:backgroundTint="@color/colorAccent"
+            android:hint="Introduce la fecha"
+            android:textColorHint="@color/colorWhite"
+            android:textColor="@color/colorWhite"
+            android:focusable="false"/>
+
+        <EditText
+            android:id="@+id/editText_hourFS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editText_dateFS"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:gravity="center"
+            android:backgroundTint="@color/colorAccent"
+            android:hint="Introduce la hora"
+            android:textColorHint="@color/colorWhite"
+            android:textColor="@color/colorWhite"
+            android:focusable="false"/>
+
+        <Button
+            android:id="@+id/button_nextFS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/editText_hourFS"
+            android:background="@color/colorPrimary"
+            android:text="Continuar"
+            android:textColor="@color/colorWhite"/>
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>

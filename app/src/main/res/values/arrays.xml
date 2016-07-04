@@ -6,4 +6,13 @@
         <item>Profesionista</item>
         <item>Sin ocupación</item>
     </string-array>
+
+    <string-array name="event_category">
+        <item>Fiesta</item>
+        <item>Cultural</item>
+        <item>Social</item>
+        <item>Deportivo</item>
+        <item>Político</item>
+        <item>Conmemorativo</item>
+    </string-array>
 </resources>

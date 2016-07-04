@@ -12,15 +12,15 @@
             android:icon="@drawable/ic_mode_edit_black_24dp"
             android:title="Modificar datos" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_newEvent"
             android:icon="@drawable/ic_public_black_24dp"
             android:title="Crear un nuevo evento" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_onlineEvents"
             android:icon="@drawable/ic_notifications_active_black_24dp"
             android:title="Eventos activos" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="Configuración" />
         <item

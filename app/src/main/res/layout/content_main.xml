@@ -17,9 +17,16 @@
         tools:layout="@layout/fragment_data_user" />
 
     <fragment android:name="teamprogra.app.fragment.FragmentPerfilUser"
-        android:id="@+id/perfiluser"
+        android:id="@+id/perfilUser"
         android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_perfil_user"/>
+
+    <fragment android:name="teamprogra.app.fragment.FragmentNewEventFirstStep"
+        android:id="@+id/newEventFirstStep"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_new_event_first_step"/>
 </RelativeLayout>

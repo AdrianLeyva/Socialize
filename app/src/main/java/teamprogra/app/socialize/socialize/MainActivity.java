@@ -28,6 +28,7 @@ import com.sromku.simple.fb.listeners.OnLogoutListener;
 
 import teamprogra.app.domain.User;
 import teamprogra.app.fragment.FragmentDataUser;
+import teamprogra.app.fragment.FragmentNewEventFirstStep;
 import teamprogra.app.fragment.FragmentPerfilUser;
 import teamprogra.app.util.CircleTransform;
 import teamprogra.app.util.Util;
@@ -35,12 +36,13 @@ import teamprogra.app.util.Util;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks,
             GoogleApiClient.OnConnectionFailedListener,FragmentDataUser.OnFragmentInteractionListener,
-            FragmentPerfilUser.OnFragmentInteractionListener{
+            FragmentPerfilUser.OnFragmentInteractionListener,FragmentNewEventFirstStep.OnFragmentInteractionListener{
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     FragmentPerfilUser fragmentPerfilUser;
     FragmentDataUser fragmentDataUser;
+    FragmentNewEventFirstStep fragmentNewEventFirstStep;
 
     private SocializeApplication app;
     private User user;
@@ -131,7 +133,12 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.container, fragmentDataUser);
             fragmentTransaction.commit();
         }
-
+        else if(id == R.id.nav_newEvent){
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentNewEventFirstStep = FragmentNewEventFirstStep.newInstance();
+            fragmentTransaction.replace(R.id.container, fragmentNewEventFirstStep);
+            fragmentTransaction.commit();
+        }
         else if (id == R.id.nav_logOut){
             if(app.isSignInGoogle()){
                 app.registerLogOut();
