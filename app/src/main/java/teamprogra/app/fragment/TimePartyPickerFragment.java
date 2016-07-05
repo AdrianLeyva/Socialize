@@ -1,5 +1,6 @@
 package teamprogra.app.fragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
@@ -24,7 +25,7 @@ public class TimePartyPickerFragment extends DialogFragment implements TimePicke
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
         // Crear una nueva instancia de DatePickerDialog y devolverlo
-        return new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
+        return new TimePickerDialog(getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_DARK,this, hour, minute, DateFormat.is24HourFormat(getActivity()));
     }
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {

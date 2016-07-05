@@ -2,18 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlack"
+    android:background="@drawable/background_tapiz"
     tools:context="teamprogra.app.fragment.FragmentDataUser">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorBlack"
+        android:alpha=".9">
 
         <ImageView
             android:id="@+id/imageView_userImageDU"
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="170dp" />
 
 
         <EditText
@@ -21,14 +23,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/imageView_userImageDU"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:textSize="20sp"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:backgroundTint="@color/colorAccent"
             android:hint="Nombre del usuario"
             android:singleLine="true"
-            android:background="@color/colorWhite"
             android:gravity="center"/>
 
         <EditText
@@ -36,15 +38,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/editText_nameDU"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:inputType="textEmailAddress"
             android:singleLine="true"
             android:textSize="20sp"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:backgroundTint="@color/colorAccent"
             android:hint="Email del usuario"
-            android:background="@color/colorWhite"
             android:gravity="center"/>
 
         <EditText
@@ -52,14 +55,15 @@
             android:layout_below="@id/editText_emailDU"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:textSize="20sp"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:backgroundTint="@color/colorAccent"
             android:hint="ubicación"
             android:singleLine="true"
-            android:background="@color/colorWhite"
             android:gravity="center"
             android:focusable="false"/>
 
@@ -68,16 +72,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/editText_ubicationDU"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:inputType="phone"
             android:ems="10"
             android:textSize="20sp"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:backgroundTint="@color/colorAccent"
             android:hint="Número celular"
             android:singleLine="true"
-            android:background="@color/colorWhite"
             android:gravity="center"/>
 
         <EditText
@@ -86,12 +91,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/editText_phoneDU"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:textSize="20sp"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
+            android:backgroundTint="@color/colorAccent"
             android:hint="mes/dia/año"
             android:singleLine="true"
-            android:background="@color/colorWhite"
             android:gravity="center"
             android:focusable="false"/>
 
@@ -109,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_below="@id/editText_birthdayDU"
             android:orientation="horizontal">
 
@@ -136,12 +142,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/radioGroup_generoDU"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:textColor="@color/colorWhite"
             android:textSize="10sp"
             android:text="Guardar"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorAccent" />
 
 
     </RelativeLayout>

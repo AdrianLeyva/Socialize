@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -159,6 +160,7 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
                 if(Util.isOnline(getContext())){
                     if (EmailValidator.verifyEmail(editTextEmail.getText().toString())){
                         saveDataUser();
+                        getActivity().recreate();
                         Util.showToastShort(this.getActivity(),"Datos guardados correctamente");
                     }else{
                         Util.showToastLong(this.getActivity(),"Introduce un email válido");

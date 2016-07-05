@@ -2,18 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_tapiz"
     tools:context="teamprogra.app.fragment.FragmentPerfilUser">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBlack">
+        android:background="@color/colorBlack"
+        android:alpha=".9">
 
         <ImageView
             android:id="@+id/imageView_userImagePU"
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="200dp"
             android:background="@color/colorAccent"/>
 
         <TextView
@@ -22,9 +24,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/imageView_userImagePU"
+            android:singleLine="true"
             android:text="User name"
             android:textColor="@color/colorWhite"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:fontFamily="serif-monospace"/>
 
         <TextView
@@ -33,9 +36,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/textView_userNamePU"
+            android:singleLine="true"
             android:text="User email"
             android:textColor="@color/colorWhite"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:fontFamily="serif-monospace"/>
 
         <TextView
@@ -44,9 +48,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/textView_userEmailPU"
+            android:singleLine="true"
             android:text="User phone"
             android:textColor="@color/colorWhite"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:fontFamily="serif-monospace"/>
 
         <TextView
@@ -55,21 +60,22 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/textView_userPhonePU"
+            android:singleLine="true"
             android:text="User ubication"
             android:textColor="@color/colorWhite"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:fontFamily="serif-monospace"/>
 
         <TextView
             android:id="@+id/textView_eventsTitlePU"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/textView_userUbicationPU"
             android:text="Eventos realizados"
             android:textColor="@color/colorAccent"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:fontFamily="monospace"
             android:gravity="center"
             android:background="@color/colorWhite"/>
