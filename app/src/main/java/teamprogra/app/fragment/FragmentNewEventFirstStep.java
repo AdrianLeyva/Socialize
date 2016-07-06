@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import teamprogra.app.adapter.AdapterListViewRules;
 import teamprogra.app.domain.Event;
 import teamprogra.app.socialize.socialize.R;
 
@@ -44,7 +45,7 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
     private EditText editTextHour;
     private Button buttonNext;
 
-    private AdapterRules adapterRules;
+    private AdapterListViewRules adapterRules;
     private ArrayList<String> listRules;
     private Event event;
     private OnFragmentInteractionListener mListener;
@@ -68,7 +69,7 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
             listRules = new ArrayList<>();
         }else {
             listRules = event.getRules();
-        }        adapterRules = new AdapterRules(getActivity());
+        }        adapterRules = new AdapterListViewRules(getActivity(),listRules);
     }
 
     @Override
