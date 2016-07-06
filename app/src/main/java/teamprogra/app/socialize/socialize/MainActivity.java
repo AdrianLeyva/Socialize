@@ -22,6 +22,11 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 import com.sromku.simple.fb.SimpleFacebook;
 import com.sromku.simple.fb.listeners.OnLogoutListener;
@@ -36,14 +41,15 @@ import teamprogra.app.util.Util;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks,
             GoogleApiClient.OnConnectionFailedListener,FragmentDataUser.OnFragmentInteractionListener,
-            FragmentPerfilUser.OnFragmentInteractionListener,FragmentNewEventFirstStep.OnFragmentInteractionListener{
+            FragmentPerfilUser.OnFragmentInteractionListener,FragmentNewEventFirstStep.OnFragmentInteractionListener,
+            teamprogra.app.fragment.MapFragment.OnFragmentInteractionListener{
 
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
-    FragmentPerfilUser fragmentPerfilUser;
-    FragmentDataUser fragmentDataUser;
-    FragmentNewEventFirstStep fragmentNewEventFirstStep;
-
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    private FragmentPerfilUser fragmentPerfilUser;
+    private FragmentDataUser fragmentDataUser;
+    private FragmentNewEventFirstStep fragmentNewEventFirstStep;
+    private MapFragment mapFragment;
     private SocializeApplication app;
     private User user;
     private SimpleFacebook mSimpleFacebook;
@@ -138,6 +144,9 @@ public class MainActivity extends AppCompatActivity
             fragmentNewEventFirstStep = FragmentNewEventFirstStep.newInstance();
             fragmentTransaction.replace(R.id.container, fragmentNewEventFirstStep);
             fragmentTransaction.commit();
+        }
+        else if(id == R.id.nav_settings){
+
         }
         else if (id == R.id.nav_logOut){
             if(app.isSignInGoogle()){

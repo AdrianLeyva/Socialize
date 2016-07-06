@@ -7,13 +7,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.orm.SugarContext;
 import com.sromku.simple.fb.Permission;
 import com.sromku.simple.fb.SimpleFacebook;
 import com.sromku.simple.fb.entities.Profile;
@@ -22,8 +18,6 @@ import com.sromku.simple.fb.listeners.OnProfileListener;
 import com.sromku.simple.fb.utils.Attributes;
 import com.sromku.simple.fb.utils.PictureAttributes;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 import teamprogra.app.domain.User;
@@ -34,7 +28,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private ProgressBar progressBar;
     private SocializeApplication app;
-    private GoogleSignInOptions gso;
     private GoogleApiClient mGoogleApiClient;
     private int RC_SIGN_IN = 1000;
     private User user;
@@ -47,7 +40,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
-        configureGoogleApi();
         mSimpleFacebook = SimpleFacebook.getInstance(this);
         user = new User();
         app = (SocializeApplication) getApplicationContext();
@@ -146,13 +138,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     };
 
-
+/*
     public void doSignInGoogle(View view){
         mGoogleApiClient.connect();
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-
+*/
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         mSimpleFacebook.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
@@ -185,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
 
-
+/*
     public void configureGoogleApi(){
         // Configure sign-in to request the user's ID, email address, and basic profile. ID and
         // basic profile are included in DEFAULT_SIGN_IN.
@@ -199,6 +191,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
     }
+    */
 /*
     public void saveDataUser(){
         Gson userJson = new Gson();

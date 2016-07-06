@@ -1,13 +1,10 @@
 package teamprogra.app.fragment;
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -33,7 +29,7 @@ import teamprogra.app.socialize.socialize.R;
  * Use the {@link FragmentNewEventFirstStep#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentNewEventFirstStep extends Fragment implements View.OnClickListener {
+public class FragmentNewEventFirstStep extends Fragment implements View.OnClickListener,MapFragment.OnFragmentInteractionListener {
 
     private EditText editTextName;
     private Spinner spinnerCategory;
@@ -44,6 +40,10 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
     private EditText editTextDate;
     private EditText editTextHour;
     private Button buttonNext;
+
+    private android.support.v4.app.FragmentTransaction fragmentTransaction;
+    private android.support.v4.app.FragmentManager fragmentManager;
+    private teamprogra.app.fragment.MapFragment mapFragment;
 
     private AdapterListViewRules adapterRules;
     private ArrayList<String> listRules;
@@ -64,6 +64,7 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        fragmentManager = getActivity().getSupportFragmentManager();
         event = new Event();
         if(event.getRules() == null){
             listRules = new ArrayList<>();
@@ -136,6 +137,10 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
                 break;
 
             case R.id.button_nextFS:
+                fragmentTransaction = fragmentManager.beginTransaction();
+                mapFragment = teamprogra.app.fragment.MapFragment.newInstance();
+                fragmentTransaction.replace(R.id.container,mapFragment);
+                fragmentTransaction.commit();
                 break;
 
             case R.id.editText_dateFS:
@@ -160,6 +165,11 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
         return this.event;
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -173,33 +183,5 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-    //Class ArrayAdapter by rules
-    class AdapterRules extends ArrayAdapter<String> {
-
-        FragmentActivity appCompatActivity;
-
-        AdapterRules(FragmentActivity context) {
-            super(context, R.layout.list_item_rules, listRules);
-            appCompatActivity = context;
-        }
-
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = appCompatActivity.getLayoutInflater();
-            View item = inflater.inflate(R.layout.list_item_rules, null);
-
-            TextView textViewRule = (TextView)item.findViewById(R.id.textView_itemRule);
-            textViewRule.setText(listRules.get(position));
-
-            Button buttonRule = (Button)item.findViewById(R.id.button_itemRule);
-            buttonRule.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listRules.remove(position);
-                    adapterRules.notifyDataSetChanged();
-                }
-            });
-            return (item);
-        }
     }
 }
