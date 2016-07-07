@@ -1,9 +1,15 @@
 package teamprogra.app.fragment;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,23 +17,23 @@ import android.view.ViewGroup;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import teamprogra.app.socialize.socialize.R;
+import teamprogra.app.util.GpsLocation;
+import teamprogra.app.util.Util;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MapFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MapFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    private com.google.android.gms.maps.MapFragment googleMap;
+    private com.google.android.gms.maps.MapFragment mapFragment;
     private OnFragmentInteractionListener mListener;
+    private GpsLocation gpsLocation;
+    private Location location;
 
     public MapFragment() {
         // Required empty public constructor
@@ -43,6 +49,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        gpsLocation = new GpsLocation();
+        //Verify if gps is online....
+        if (!gpsLocation.isGpsOnline(getActivity())) {
+            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     @Override
@@ -50,9 +68,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_map, container, false);
-        googleMap = (com.google.android.gms.maps.MapFragment) getActivity().getFragmentManager()
+        mapFragment = (com.google.android.gms.maps.MapFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.map);
-        googleMap.getMapAsync(this);
+            mapFragment.getMapAsync(this);
 
         return view;
     }
@@ -83,9 +101,35 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        //Set actual position button.....
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        googleMap.setMyLocationEnabled(true);
+
+        //Add a marker on googlemaps....
         googleMap.addMarker(new MarkerOptions()
-            .position(new LatLng(0,0))
-            .title("Marker"));
+                .position(new LatLng(0,0))
+                .title("Aquí será mi evento")
+                .draggable(true)
+                .alpha(0.9f));
+
+        //configure settings on googlemaps....
+        UiSettings setting = googleMap.getUiSettings();
+        setting.setZoomControlsEnabled(true);
+        setting.setZoomGesturesEnabled(true);
+        setting.setCompassEnabled(true);
+
+        //configure map type...
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
     }
 
 

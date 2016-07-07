@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -21,6 +22,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
         app = (SocializeApplication) getApplicationContext();
+
+        Log.d("DEBUG", "DEBIGIGIEGIEGE");
         throwSplash();
     }
 
@@ -52,6 +55,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }finally {
                         if(app.isLoginStart()){
+                            Log.d("DEBUG", "Send to modos");
                             Util.sendAndFinish(SplashScreenActivity.this, ModosActivity.class);
                         }
                         else{

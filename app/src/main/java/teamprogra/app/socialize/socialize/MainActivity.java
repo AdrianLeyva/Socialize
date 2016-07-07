@@ -1,6 +1,7 @@
 package teamprogra.app.socialize.socialize;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -166,6 +168,12 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("DEBUG", "Volvi de los settings");
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     public void onConnected(Bundle bundle) {
