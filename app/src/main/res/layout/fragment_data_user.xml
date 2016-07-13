@@ -2,14 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_tapiz"
+    android:background="@color/colorDarkRed"
     tools:context="teamprogra.app.fragment.FragmentDataUser">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBlack"
-        android:alpha=".9">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/imageView_userImageDU"
@@ -28,7 +26,7 @@
             android:textSize="20sp"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="Nombre del usuario"
             android:singleLine="true"
             android:gravity="center"/>
@@ -46,7 +44,7 @@
             android:textSize="20sp"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="Email del usuario"
             android:gravity="center"/>
 
@@ -61,7 +59,7 @@
             android:textSize="20sp"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="ubicación"
             android:singleLine="true"
             android:gravity="center"
@@ -80,7 +78,7 @@
             android:textSize="20sp"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="Número celular"
             android:singleLine="true"
             android:gravity="center"/>
@@ -95,20 +93,12 @@
             android:textSize="20sp"
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="mes/dia/año"
             android:singleLine="true"
             android:gravity="center"
             android:focusable="false"/>
 
-        <Button
-            android:id="@+id/button_configBirthdayDU"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/editText_birthdayDU"
-            android:layout_alignBaseline="@id/editText_birthdayDU"
-            android:background="@drawable/ic_build_white_24dp"/>
 
         <RadioGroup
             android:id="@+id/radioGroup_generoDU"
@@ -123,7 +113,6 @@
                 android:id="@+id/radioButton_masculinoDU"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
                 android:text="Masculino"
                 android:textColor="@color/colorWhite"/>
 
@@ -131,7 +120,6 @@
                 android:id="@+id/radioButton_femeninoDU"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
                 android:text="Femenino"
                 android:textColor="@color/colorWhite"/>
         </RadioGroup>

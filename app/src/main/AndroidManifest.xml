@@ -40,6 +40,7 @@
 
         <activity
             android:name=".SplashScreenActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar">
             <intent-filter>
@@ -50,15 +51,18 @@
         </activity>
         <activity
             android:name=".ModosActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleInstance"
             android:label="@string/title_activity_ModoAnfitrion"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RegisterActivity" />

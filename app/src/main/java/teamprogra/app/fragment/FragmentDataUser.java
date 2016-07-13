@@ -53,7 +53,6 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
     private RadioGroup radioGroupGender;
     private RadioButton radioButtonMale;
     private RadioButton radioButtonFemale;
-    private Button buttonSetBirthDay;
     private Button buttonSave;
 
     public FragmentDataUser() {
@@ -91,7 +90,6 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
         editTextBirthDay = (EditText)view.findViewById(R.id.editText_birthdayDU);
         editTextUbication = (EditText)view.findViewById(R.id.editText_ubicationDU);
         editTextPhone = (EditText)view.findViewById(R.id.editText_phoneDU);
-        buttonSetBirthDay = (Button)view.findViewById(R.id.button_configBirthdayDU);
         buttonSave = (Button)view.findViewById(R.id.button_saveDU);
         imageViewUser = (ImageView)view.findViewById(R.id.imageView_userImageDU);
         radioGroupGender = (RadioGroup)view.findViewById(R.id.radioGroup_generoDU);
@@ -103,10 +101,10 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
         editTextPhone.setText(user.getPhone());
 
         imageViewUser.setOnClickListener(this);
-        buttonSetBirthDay.setOnClickListener(this);
+        editTextBirthDay.setOnClickListener(this);
         buttonSave.setOnClickListener(this);
 
-        Picasso.with(getContext()).load(user.getPhoto()).error(R.drawable.login_user).transform(new CircleTransform()).into(imageViewUser);
+        Picasso.with(getContext()).load(user.getPhoto()).error(R.drawable.login).transform(new CircleTransform()).into(imageViewUser);
 
         if(user.getGender().equals("male")){
             radioButtonMale = (RadioButton) radioGroupGender.findViewById(R.id.radioButton_masculinoDU);
@@ -152,7 +150,7 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
                 galeyIntent.setType("image/*");
                 startActivityForResult(galeyIntent, ACTIVITY_SELECT_IMAGE);
                 break;
-            case R.id.button_configBirthdayDU:
+            case R.id.editText_birthdayDU:
                 DialogFragment dp = new DatePickerFragment();
                 dp.show(getActivity().getFragmentManager(),"DATEPICKER");
                 break;
@@ -163,7 +161,7 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
                         getActivity().recreate();
                         Util.showToastShort(this.getActivity(),"Datos guardados correctamente");
                     }else{
-                        Util.showToastLong(this.getActivity(),"Introduce un email válido");
+                        editTextEmail.setError("Introduce un email válido");
                     }
                 }else{
                     Snackbar.make(view, "Error, verifique su conexión a Internet", Snackbar.LENGTH_LONG)

@@ -2,8 +2,10 @@ package teamprogra.app.socialize.socialize;
 
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -41,8 +43,7 @@ import teamprogra.app.util.CircleTransform;
 import teamprogra.app.util.Util;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks,
-            GoogleApiClient.OnConnectionFailedListener,FragmentDataUser.OnFragmentInteractionListener,
+        implements NavigationView.OnNavigationItemSelectedListener,FragmentDataUser.OnFragmentInteractionListener,
             FragmentPerfilUser.OnFragmentInteractionListener,FragmentNewEventFirstStep.OnFragmentInteractionListener,
             teamprogra.app.fragment.MapFragment.OnFragmentInteractionListener{
 
@@ -51,11 +52,9 @@ public class MainActivity extends AppCompatActivity
     private FragmentPerfilUser fragmentPerfilUser;
     private FragmentDataUser fragmentDataUser;
     private FragmentNewEventFirstStep fragmentNewEventFirstStep;
-    private MapFragment mapFragment;
     private SocializeApplication app;
     private User user;
     private SimpleFacebook mSimpleFacebook;
-    private GoogleApiClient mGoogleApiClient;
     private TextView textViewName;
     private TextView textViewEmail;
     private ImageView imageViewProfile;
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity
         //getUserData();
         textViewName.setText(user.getName());
         textViewEmail.setText(user.getEmail());
-        Picasso.with(getApplicationContext()).load(user.getPhoto()).error(R.drawable.login_user).transform(new CircleTransform()).into(imageViewProfile);
+        Picasso.with(getApplicationContext()).load(user.getPhoto()).error(R.drawable.login).transform(new CircleTransform()).into(imageViewProfile);
     }
 
     @Override
@@ -151,16 +150,7 @@ public class MainActivity extends AppCompatActivity
 
         }
         else if (id == R.id.nav_logOut){
-            if(app.isSignInGoogle()){
-                app.registerLogOut();
-                app.registerLogOutGoogle();
-
-                Util.showToastShort(this,"google");
-                Util.sendAndFinish(MainActivity.this,LoginActivity.class);
-            }
-            else{
                 mSimpleFacebook.logout(onLogoutListener);
-            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -175,15 +165,6 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onConnected(Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Util.showToastShort(MainActivity.this,"Revise su conexión a Internet");
-    }
 
     // logout listener
     OnLogoutListener onLogoutListener = new OnLogoutListener() {
@@ -195,11 +176,6 @@ public class MainActivity extends AppCompatActivity
             Util.sendAndFinish(MainActivity.this,LoginActivity.class);
         }
     };
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-    }
 
     @Override
     public void onFragmentInteraction(Uri uri) {

@@ -24,7 +24,6 @@ public class SocializeApplication extends SugarApp{
     private SharedPreferences preferences;
 
     private static final String APP_KEY_IS_LOGIN_START = "APP_KEY_IS_LOGIN_START";
-    private static final String APP_KEY_IS_SIGN_IN_WITH_GOOGLE = "APP_KEY_IS_LOGIN_WITH_GOOGLE";
     private static final String APP_KEY_IS_SIGN_IN_WITH_FACEBOOK = "APP_KEY_IS_LOGIN_WITH_FACEBOOK";
 
     public static final String APP_VALUE_ID = "APP_VALUE_ID";
@@ -74,13 +73,6 @@ public class SocializeApplication extends SugarApp{
         return getBooleanRegisterValuePreferences(SocializeApplication.APP_KEY_IS_LOGIN_START);
     }
 
-    public void registerSignInGoogle(){
-        saveValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_GOOGLE,true);
-    }
-
-    public void registerLogOutGoogle(){
-        saveValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_GOOGLE,false);
-    }
 
     public void registerSignInFacebook(){
         saveValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_FACEBOOK, true);
@@ -111,14 +103,6 @@ public class SocializeApplication extends SugarApp{
     }
 
 
-    public boolean isSignInGoogle(){
-        return getBooleanRegisterValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_GOOGLE);
-    }
-
-    public boolean isSignInFacebook(){
-        return getBooleanRegisterValuePreferences(SocializeApplication.APP_KEY_IS_SIGN_IN_WITH_FACEBOOK);
-    }
-
 
     public void saveValuePreferences(String key,String value){
         SharedPreferences.Editor editor = preferences.edit();
@@ -130,12 +114,6 @@ public class SocializeApplication extends SugarApp{
     public void saveValuePreferences(String key, boolean value){
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(key,value);
-        editor.commit();
-    }
-
-    public void saveValuePreferences(String key,int value){
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(key,value);
         editor.commit();
     }
 
@@ -157,30 +135,6 @@ public class SocializeApplication extends SugarApp{
 
     public void setPreferences(SharedPreferences preferences) {
         this.preferences = preferences;
-    }
-
-    public static String getAppValueId() {
-        return APP_VALUE_ID;
-    }
-
-    public static String getAppValueName() {
-        return APP_VALUE_NAME;
-    }
-
-    public static String getAppValueEmail() {
-        return APP_VALUE_EMAIL;
-    }
-
-    public static String getAppValuePicture() {
-        return APP_VALUE_PICTURE;
-    }
-
-    public static String getAppValueBirthday() {
-        return APP_VALUE_BIRTHDAY;
-    }
-
-    public static String getAppValueGender() {
-        return APP_VALUE_GENDER;
     }
 
 }

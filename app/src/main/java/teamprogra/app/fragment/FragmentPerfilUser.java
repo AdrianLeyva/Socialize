@@ -73,7 +73,7 @@ public class FragmentPerfilUser extends Fragment {
         textViewEventsHistorial = (TextView)view.findViewById(R.id.textView_eventsHistorialPU);
         ratingBarUser = (RatingBar)view.findViewById(R.id.ratingBar);
 
-        Picasso.with(getContext()).load(user.getPhoto()).error(R.drawable.login_user).transform(new CircleTransform()).into(imageViewUser);
+        Picasso.with(getContext()).load(user.getPhoto()).error(R.drawable.login).transform(new CircleTransform()).into(imageViewUser);
         textViewName.setText(user.getName());
         textViewEmail.setText(user.getEmail());
         textViewPhone.setText(user.getPhone());

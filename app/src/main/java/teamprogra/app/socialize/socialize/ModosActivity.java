@@ -10,7 +10,6 @@ import teamprogra.app.util.Util;
 
 public class ModosActivity extends AppCompatActivity {
 
-    private SocializeApplication app;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,11 +27,6 @@ public class ModosActivity extends AppCompatActivity {
     }
 
     public void goAnfitrion(View view){
-        Thread threadGo = new Thread(){
-            public void run(){
-                Util.sendAndFinish(ModosActivity.this,MainActivity.class);
-            }
-        };
-        threadGo.start();
+       Util.sendAndFinish(ModosActivity.this,MainActivity.class);
     }
 }

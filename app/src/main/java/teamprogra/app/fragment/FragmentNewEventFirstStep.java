@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import teamprogra.app.adapter.AdapterListViewRules;
 import teamprogra.app.domain.Event;
 import teamprogra.app.socialize.socialize.R;
+import teamprogra.app.socialize.socialize.SocializeApplication;
+import teamprogra.app.util.Util;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,8 +49,12 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
 
     private AdapterListViewRules adapterRules;
     private ArrayList<String> listRules;
+    private SocializeApplication app;
     private Event event;
     private OnFragmentInteractionListener mListener;
+
+    private boolean flagEventComplete;
+    private int flagEvent;
 
     public FragmentNewEventFirstStep() {
         // Required empty public constructor
@@ -63,9 +69,12 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if(event == null){
+            event = new Event();
+        }
+        app = (SocializeApplication)getActivity().getApplicationContext();
         fragmentManager = getActivity().getSupportFragmentManager();
-        event = new Event();
+
         if(event.getRules() == null){
             listRules = new ArrayList<>();
         }else {
@@ -137,10 +146,14 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
                 break;
 
             case R.id.button_nextFS:
-                fragmentTransaction = fragmentManager.beginTransaction();
-                mapFragment = teamprogra.app.fragment.MapFragment.newInstance();
-                fragmentTransaction.replace(R.id.container,mapFragment);
-                fragmentTransaction.commit();
+                getDataEvent();
+                if(isDataEventComplete()){
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    mapFragment = teamprogra.app.fragment.MapFragment.newInstance();
+                    mapFragment.setEvent(event);
+                    fragmentTransaction.replace(R.id.container,mapFragment);
+                    fragmentTransaction.commit();
+                }
                 break;
 
             case R.id.editText_dateFS:
@@ -165,6 +178,16 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
         return this.event;
     }
 
+    public void getDataEvent(){
+        event.setName(editTextName.getText().toString());
+        event.setCategory(spinnerCategory.getSelectedItem().toString());
+        event.setDescription(editTextDescription.getText().toString());
+        event.setRules(listRules);
+        event.setDate(editTextDate.getText().toString());
+        event.setHour(editTextHour.getText().toString());
+        event.setResponsible(app.getStringRegisterValuePreferences(SocializeApplication.APP_VALUE_NAME));
+    }
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 
@@ -183,5 +206,41 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public boolean isDataEventComplete(){
+        flagEvent = 0;
+        if(!event.getName().isEmpty()){
+            flagEvent++;
+        }else {
+            editTextName.setError("Introduzca el nombre del evento");
+        }
+        if (!event.getCategory().isEmpty()){
+            flagEvent++;
+        }
+        if (!event.getDescription().isEmpty()){
+            flagEvent++;
+        }else{
+            editTextDescription.setError("Introduzca la descripción del evento");
+        }
+        if (!event.getRules().isEmpty()){
+            flagEvent++;
+        }else {
+            editTextRules.setError("Introduzca al menos una regla");
+        }
+        if (!event.getDate().isEmpty()){
+            flagEvent++;
+        }else {
+            editTextDate.setError("Asigne la fecha del evento");
+        }
+        if (!event.getHour().isEmpty()){
+            flagEvent++;
+        }else {
+            editTextHour.setError("Asigne la hora del evento");
+        }
+        if (flagEvent == 6){
+            flagEventComplete = true;
+        }
+        return flagEventComplete;
     }
 }

@@ -1,6 +1,7 @@
 package teamprogra.app.socialize.socialize;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import teamprogra.app.util.Util;
 
@@ -47,24 +51,18 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     public void throwSplash(){
         if(Util.isOnline(getApplicationContext())){
-            final Thread timerThreed = new Thread(){
+            final TimerTask timerTask = new TimerTask(){
                 public void run(){
-                    try{
-                        sleep(3000);
-                    }catch (InterruptedException e){
-                        e.printStackTrace();
-                    }finally {
-                        if(app.isLoginStart()){
-                            Log.d("DEBUG", "Send to modos");
-                            Util.sendAndFinish(SplashScreenActivity.this, ModosActivity.class);
-                        }
-                        else{
-                            Util.sendAndFinish(SplashScreenActivity.this, LoginActivity.class);
-                        }
+                    if(app.isLoginStart()){
+                        Util.sendAndFinish(SplashScreenActivity.this, ModosActivity.class);
+                    }
+                    else{
+                        Util.sendAndFinish(SplashScreenActivity.this, LoginActivity.class);
                     }
                 }
             };
-            timerThreed.start();
+            Timer timer = new Timer();
+            timer.schedule(timerTask,3000);
         }else {
             new AlertDialog.Builder(this)
                     .setCancelable(false)

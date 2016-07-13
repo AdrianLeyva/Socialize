@@ -3,13 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="teamprogra.app.fragment.FragmentNewEventFirstStep"
-    android:background="@drawable/backgroud_first_step">
+    android:background="@color/colorDarkRed">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBlack"
-        android:alpha=".8">
+        android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/textView_EventNameFS"
@@ -24,7 +22,7 @@
             android:singleLine="true"
             android:textColorHint="@color/colorWhite"
             android:textColor="@color/colorWhite"
-            android:backgroundTint="@color/colorAccent"/>
+            android:backgroundTint="@color/colorPrimary"/>
 
         <Spinner
             android:id="@+id/spinner_eventCategoryFS"
@@ -47,7 +45,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
             android:layout_below="@id/spinner_eventCategoryFS"
             android:gravity="center"
             android:inputType="textMultiLine"
@@ -76,7 +74,7 @@
             android:layout_below="@id/listView_rulesFS"
             android:gravity="center"
             android:singleLine="true"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="Introduce las reglas aquí..."
             android:textColorHint="@color/colorWhite"
             android:textColor="@color/colorWhite"/>
@@ -100,7 +98,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
             android:gravity="center"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="Introduce la fecha"
             android:textColorHint="@color/colorWhite"
             android:textColor="@color/colorWhite"
@@ -115,7 +113,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
             android:gravity="center"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="Introduce la hora"
             android:textColorHint="@color/colorWhite"
             android:textColor="@color/colorWhite"

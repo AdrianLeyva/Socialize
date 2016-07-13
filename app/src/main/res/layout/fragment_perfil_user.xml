@@ -2,21 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_tapiz"
-    tools:context="teamprogra.app.fragment.FragmentPerfilUser">
+    tools:context="teamprogra.app.fragment.FragmentPerfilUser"
+    android:background="@color/colorDarkRed">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBlack"
-        android:alpha=".9">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/imageView_userImagePU"
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorPrimaryDark"
+            android:alpha=".8"/>
 
         <TextView
             android:id="@+id/textView_userNamePU"
@@ -99,7 +98,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/textView_totalEventsPU"
             android:text="Ver historial"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="30sp"
             android:fontFamily="serif-monospace" />
 
@@ -120,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             android:layout_below="@id/textView_scorePU"
             android:isIndicator="true"
             android:numStars="5"/>
