@@ -2,6 +2,7 @@ package teamprogra.app.fragment;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -12,7 +13,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +23,7 @@ import android.widget.Button;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -30,13 +31,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import teamprogra.app.domain.Event;
 import teamprogra.app.socialize.socialize.R;
-import teamprogra.app.util.GpsLocation;
-import teamprogra.app.util.Util;
+import teamprogra.app.utils.GpsLocation;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback,View.OnClickListener {
 
     public static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 11;
+    public static final int INTENT_ACTIVATE_GPS = 10;
 
     private com.google.android.gms.maps.MapFragment mapFragment;
     private OnFragmentInteractionListener mListener;
@@ -53,6 +54,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,View.OnC
     private Button buttonNext;
     private boolean markerFlag;
 
+    private static View view;
 
     public MapFragment() {
         // Required empty public constructor
@@ -73,28 +75,65 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,View.OnC
         fragmentManager = getActivity().getSupportFragmentManager();
         //Verify if gps is online....
         if (!gpsLocation.isGpsOnline(getActivity())) {
-            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS),INTENT_ACTIVATE_GPS);
         }
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        switch(requestCode){
+            case INTENT_ACTIVATE_GPS:
+                if(!gpsLocation.isGpsOnline(getActivity())){
+                    new AlertDialog.Builder(getContext())
+                            .setCancelable(false)
+                            .setTitle("Es necesario el GPS para continuar.")
+                            .setMessage("¿Activar?")
+                            .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS),INTENT_ACTIVATE_GPS);
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    fragmentTransaction = fragmentManager.beginTransaction();
+                                    FragmentPerfilUser fragmentPerfilUser = FragmentPerfilUser.newInstance();
+                                    fragmentTransaction.replace(R.id.container,fragmentPerfilUser);
+                                    fragmentTransaction.commit();
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+                break;
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_map, container, false);
-        mapFragment = (com.google.android.gms.maps.MapFragment) getActivity().getFragmentManager()
-                .findFragmentById(R.id.map);
-        buttonGoBack = (Button)view.findViewById(R.id.button_fragmentMapGoBack);
-        buttonNext = (Button)view.findViewById(R.id.button_fragmentMapNext);
-        buttonGoBack.setOnClickListener(this);
-        buttonNext.setOnClickListener(this);
-        mapFragment.getMapAsync(this);
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            // Inflate the layout for this fragment
+            view = inflater.inflate(R.layout.fragment_map, container, false);
+            mapFragment = (com.google.android.gms.maps.MapFragment) getActivity().getFragmentManager()
+                    .findFragmentById(R.id.map);
+            buttonGoBack = (Button)view.findViewById(R.id.button_fragmentMapGoBack);
+            buttonNext = (Button)view.findViewById(R.id.button_fragmentMapNext);
+            buttonGoBack.setOnClickListener(this);
+            buttonNext.setOnClickListener(this);
+            mapFragment.getMapAsync(this);
+        } catch (InflateException e) {
+        /* map is already there, just return view as it is */
+            e.printStackTrace();
+        }
         return view;
     }
 
@@ -117,8 +156,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,View.OnC
     }
 
     @Override
+    public void onDestroyView() {
+        mapFragment = null;
+        super.onDestroyView();
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
+        Log.d("MAPFRAGMENT", "Quitando mapa");
         mListener = null;
     }
 
@@ -192,6 +238,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,View.OnC
                 fragmentNewEventFirstStep.setEvent(event);
                 fragmentTransaction.replace(R.id.container,fragmentNewEventFirstStep);
                 fragmentTransaction.commit();
+                fragmentManager.popBackStack();
                 break;
 
             case R.id.button_fragmentMapNext:

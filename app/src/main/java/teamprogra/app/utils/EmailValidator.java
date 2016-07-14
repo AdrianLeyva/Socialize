@@ -1,9 +1,7 @@
-package teamprogra.app.util;
+package teamprogra.app.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import teamprogra.app.domain.User;
 
 /**
  * Created by adrianleyva on 30/06/16.
@@ -24,7 +22,7 @@ public class EmailValidator {
      *            hex for validation
      * @return true valid hex, false invalid hex
      */
-    public static boolean verifyEmail(String user){
+    public static boolean isValid(String user){
         pattern = Pattern.compile(EMAIL_PATTERN);
         matcher = pattern.matcher(user);
         return matcher.matches();

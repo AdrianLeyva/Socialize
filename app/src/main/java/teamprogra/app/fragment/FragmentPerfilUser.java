@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import teamprogra.app.domain.User;
 import teamprogra.app.socialize.socialize.R;
 import teamprogra.app.socialize.socialize.SocializeApplication;
-import teamprogra.app.util.CircleTransform;
+import teamprogra.app.utils.CircleTransform;
 
 /**
  * A simple {@link Fragment} subclass.

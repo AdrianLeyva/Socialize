@@ -12,10 +12,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
-import com.google.gson.Gson;
-
 import teamprogra.app.domain.User;
-import teamprogra.app.util.Util;
+import teamprogra.app.utils.Utils;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -71,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     public void finalizeRegister(View view){
         getUserData();
         saveDataUser();
-        Util.sendAndFinish(this,MainActivity.class);
+        Utils.sendAndFinish(this,MainActivity.class);
     }
 
     public User getUserObject(){

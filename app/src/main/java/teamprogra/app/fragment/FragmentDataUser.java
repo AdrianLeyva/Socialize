@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +15,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import teamprogra.app.domain.User;
-import teamprogra.app.socialize.socialize.LoginActivity;
 import teamprogra.app.socialize.socialize.R;
 import teamprogra.app.socialize.socialize.SocializeApplication;
-import teamprogra.app.util.CircleTransform;
-import teamprogra.app.util.EmailValidator;
-import teamprogra.app.util.Util;
+import teamprogra.app.utils.CircleTransform;
+import teamprogra.app.utils.EmailValidator;
+import teamprogra.app.utils.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,10 +36,11 @@ import teamprogra.app.util.Util;
 public class FragmentDataUser extends Fragment implements View.OnClickListener {
 
     public static final int ACTIVITY_SELECT_IMAGE = 1020;
+
     private User user;
     private SocializeApplication app;
-    private OnFragmentInteractionListener mListener;
 
+    private OnFragmentInteractionListener mListener;
     private ImageView imageViewUser;
     private EditText editTextName;
     private EditText editTextEmail;
@@ -54,6 +51,9 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
     private RadioButton radioButtonMale;
     private RadioButton radioButtonFemale;
     private Button buttonSave;
+
+    private int flagInt;
+    private boolean flagBool;
 
     public FragmentDataUser() {
         // Required empty public constructor
@@ -155,14 +155,21 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
                 dp.show(getActivity().getFragmentManager(),"DATEPICKER");
                 break;
             case R.id.button_saveDU:
-                if(Util.isOnline(getContext())){
-                    if (EmailValidator.verifyEmail(editTextEmail.getText().toString())){
-                        saveDataUser();
-                        getActivity().recreate();
-                        Util.showToastShort(this.getActivity(),"Datos guardados correctamente");
-                    }else{
-                        editTextEmail.setError("Introduce un email válido");
+
+                if(Utils.isOnline(getContext())){
+
+                    if(isValidDataUser()){
+
+                        if (EmailValidator.isValid(editTextEmail.getText().toString())){
+                            saveDataUser();
+                            getActivity().recreate();
+                            Utils.showToastShort(this.getActivity(),"Datos guardados correctamente");
+                        }else{
+                                editTextEmail.setError("Introduce un email válido");
+                        }
+
                     }
+
                 }else{
                     Snackbar.make(view, "Error, verifique su conexión a Internet", Snackbar.LENGTH_LONG)
                             //.setActionTextColor(Color.CYAN)
@@ -215,6 +222,35 @@ public class FragmentDataUser extends Fragment implements View.OnClickListener {
         }else {
             app.saveValuePreferences(SocializeApplication.APP_VALUE_GENDER,"female");
         }
+    }
+
+
+    public boolean isValidDataUser(){
+        flagInt = 0;
+        if(!editTextName.getText().toString().isEmpty()){
+            flagInt++;
+        }else {
+            editTextName.setError("Introduzca su nombre");
+        }
+        if (!editTextEmail.getText().toString().isEmpty()){
+            flagInt++;
+        }else {
+            editTextEmail.setError("Introduzca su email");
+        }
+        if(!editTextPhone.getText().toString().isEmpty()){
+            flagInt++;
+        }else {
+            editTextPhone.setError("Introduzca su número");
+        }
+
+        if(flagInt == 3){
+            flagBool = true;
+        }else {
+            flagBool = false;
+        }
+
+        return flagBool;
+
     }
 
 }

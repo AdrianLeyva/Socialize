@@ -2,10 +2,8 @@ package teamprogra.app.socialize.socialize;
 
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -23,14 +21,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 import com.sromku.simple.fb.SimpleFacebook;
 import com.sromku.simple.fb.listeners.OnLogoutListener;
@@ -39,8 +29,8 @@ import teamprogra.app.domain.User;
 import teamprogra.app.fragment.FragmentDataUser;
 import teamprogra.app.fragment.FragmentNewEventFirstStep;
 import teamprogra.app.fragment.FragmentPerfilUser;
-import teamprogra.app.util.CircleTransform;
-import teamprogra.app.util.Util;
+import teamprogra.app.utils.CircleTransform;
+import teamprogra.app.utils.Utils;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,FragmentDataUser.OnFragmentInteractionListener,
@@ -173,7 +163,7 @@ public class MainActivity extends AppCompatActivity
         public void onLogout() {
             app.registerLogOut();
             app.registerLogOutFacebook();
-            Util.sendAndFinish(MainActivity.this,LoginActivity.class);
+            Utils.sendAndFinish(MainActivity.this,LoginActivity.class);
         }
     };
 

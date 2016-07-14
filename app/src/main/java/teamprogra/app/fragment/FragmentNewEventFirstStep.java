@@ -21,7 +21,6 @@ import teamprogra.app.adapter.AdapterListViewRules;
 import teamprogra.app.domain.Event;
 import teamprogra.app.socialize.socialize.R;
 import teamprogra.app.socialize.socialize.SocializeApplication;
-import teamprogra.app.util.Util;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,6 +80,7 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
             listRules = event.getRules();
         }        adapterRules = new AdapterListViewRules(getActivity(),listRules);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,13 +147,15 @@ public class FragmentNewEventFirstStep extends Fragment implements View.OnClickL
 
             case R.id.button_nextFS:
                 getDataEvent();
-                if(isDataEventComplete()){
+                if(isDataEventComplete()) {
                     fragmentTransaction = fragmentManager.beginTransaction();
                     mapFragment = teamprogra.app.fragment.MapFragment.newInstance();
                     mapFragment.setEvent(event);
-                    fragmentTransaction.replace(R.id.container,mapFragment);
+                    fragmentTransaction.replace(R.id.container, mapFragment);
+                    fragmentTransaction.addToBackStack(mapFragment.toString());
                     fragmentTransaction.commit();
                 }
+
                 break;
 
             case R.id.editText_dateFS:

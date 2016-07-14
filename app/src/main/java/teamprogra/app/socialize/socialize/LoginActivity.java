@@ -19,7 +19,7 @@ import java.util.List;
 
 import teamprogra.app.domain.User;
 
-import teamprogra.app.util.Util;
+import teamprogra.app.utils.Utils;
 
 public class LoginActivity extends AppCompatActivity{
 
@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     public void doSignInFacebook(View view){
-        if(Util.isOnline(getApplicationContext())){
+        if(Utils.isOnline(getApplicationContext())){
             Thread threadAccess = new Thread(){
                 public void run(){
                     mSimpleFacebook.login(onLoginListener);
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity{
             };
             threadAccess.start();
         }else {
-            Util.showToastLong(this,"Verifique su conexión a Internet");
+            Utils.showToastLong(this,"Verifique su conexión a Internet");
         }
 
     }
@@ -94,12 +94,12 @@ public class LoginActivity extends AppCompatActivity{
 
         @Override
         public void onException(Throwable throwable) {
-
+            Utils.showToastLong(LoginActivity.this,"Se ha reportado un error, intente nuevamente");
         }
 
         @Override
         public void onFail(String reason) {
-            Util.showToastShort(LoginActivity.this,"Ha ocurrido un error, intente nuevamente.");
+            Utils.showToastShort(LoginActivity.this,"Error en la conexión, intente de nuevo");
         }
     };
 
@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity{
             }
             app.registerLogIn();
             app.registerSignInFacebook();
-            Util.sendAndFinish(LoginActivity.this,ModosActivity.class);
+            Utils.sendAndFinish(LoginActivity.this,ModosActivity.class);
         }
 
         @Override
@@ -125,6 +125,7 @@ public class LoginActivity extends AppCompatActivity{
         @Override
         public void onFail(String reason) {
             super.onFail(reason);
+            Utils.showToastLong(LoginActivity.this,"Ocurrió un error en el registro, intente nuevamente");
         }
 
         @Override

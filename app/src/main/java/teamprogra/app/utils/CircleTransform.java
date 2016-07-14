@@ -1,4 +1,4 @@
-package teamprogra.app.util;
+package teamprogra.app.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

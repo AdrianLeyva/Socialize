@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import teamprogra.app.util.Util;
+import teamprogra.app.utils.Utils;
 
 public class ModosActivity extends AppCompatActivity {
 
@@ -27,6 +27,6 @@ public class ModosActivity extends AppCompatActivity {
     }
 
     public void goAnfitrion(View view){
-       Util.sendAndFinish(ModosActivity.this,MainActivity.class);
+       Utils.sendAndFinish(ModosActivity.this,MainActivity.class);
     }
 }
